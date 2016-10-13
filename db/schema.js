@@ -17,7 +17,7 @@ module.exports = function (mongoose) {
     
     var userSchema = new Schema({
         id: ObjectId,
-        name: {
+        username: {
             type: String,
             unique: true
         },
