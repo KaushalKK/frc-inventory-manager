@@ -26,5 +26,5 @@ app.use('/', routes);
 app.use(express.static('public'));
 
 http.createServer(app).listen(app.get('port'), function () {
-    console.log('Banking 3.0 server listening on port ' + app.get('port'));
+    console.log('FRC Inventory server listening on port ' + app.get('port'));
 });
