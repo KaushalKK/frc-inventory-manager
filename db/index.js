@@ -18,5 +18,11 @@ module.exports = function (dbConfig) {
         console.log("connected!");
     });
 
+    process.on('SIGTERM', function () {
+        setTimeout(function () {
+            mongoose.close();
+        }, 1000);
+    });
+
     return db;
 }
