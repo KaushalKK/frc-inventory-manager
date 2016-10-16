@@ -5,18 +5,16 @@ module.exports = function (mongoose) {
     var ObjectId = Schema.Types.ObjectId;
 
     var caseSchema = new Schema({
-        id: {
-            type: ObjectId,
+        number: {
+            type: Number,
             unique: true
         },
-        number: Number,
         category: String,
         location: String,
         description: String
     });
-    
+
     var userSchema = new Schema({
-        id: ObjectId,
         username: {
             type: String,
             unique: true
@@ -24,45 +22,33 @@ module.exports = function (mongoose) {
         email: String,
         password: String
     });
-    
+
     var checkInSchema = new Schema({
-        id: {
-            type: ObjectId,
-            unique: true
-        },
         date: Date,
         caseId: ObjectId,
         userId: ObjectId,
         productId: ObjectId
     });
-    
+
     var productSchema = new Schema({
-        id: {
-            type: ObjectId,
-            unique: true
-        },
         name: String,
         price: Number,
         caseId: ObjectId,
         status: String,
         category: String,
         quantity: Number,
-        description: String, 
+        description: String,
         caseQuantity: Number
     });
-    
+
     var checkOutSchema = new Schema({
-        id: {
-            type: ObjectId,
-            unique: true
-        },
         date: Date,
         caseId: ObjectId,
         userId: ObjectId,
         productId: ObjectId
     });
-    
-    
+
+
     return {
         case: caseSchema,
         user: userSchema,

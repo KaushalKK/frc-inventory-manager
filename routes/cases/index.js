@@ -8,12 +8,22 @@ module.exports = function (router, db) {
             router.put(resource, function (req, res) {
                 var caseDetails = new db.models.Cases(req.body);
 
-                caseDetails.save().exec()
+                caseDetails.save()
                     .then(function (caseDetails) {
                         res.status(201).send(caseDetails);
                     })
                     .catch(function (err) {
                         res.status(400).send('Failed to create case.');
+                    });
+            });
+
+            router.get(resource + "/all", function (req, res) {
+                db.models.Cases.find({}).exec()
+                    .then(function (allCases) {
+                        res.send(allCases);
+                    })
+                    .catch(function (err) {
+                        res.status(400).send('Failed to get cases.');
                     });
             });
 
@@ -28,8 +38,6 @@ module.exports = function (router, db) {
             });
 
             router.post(resource + "/:caseNumber", function (req, res) {
-                var caseDetails = new db.models.Cases(req.body);
-
                 db.models.Cases.update({ number: req.params.caseNumber }, req.body, { overwrite: true }).exec()
                     .then(function (updatedCaseDetails) {
                         res.status(200).send('Case ' + req.params.caseNumber + ' details updated.');
@@ -37,6 +45,39 @@ module.exports = function (router, db) {
                     .catch(function (err) {
                         res.status(500).send('Failed to update Case ' + req.params.caseNumber + ' details.');
                     });
+            });
+
+            router.post(resource + "/:caseNumber" + "/checkin", function (req, res) {
+                db.models.Cases.update({ number: req.params.caseNumber }, { $set: { location: 'home' } }).exec()
+                    .then(function (updatedCaseDetails) {
+                        res.status(200).send('Case ' + req.params.caseNumber + ' details updated.');
+                    })
+                    .catch(function (err) {
+                        res.status(500).send('Failed to check in case.');
+                    });
+            });
+
+            router.post(resource + "/:caseNumber" + "/checkout", function (req, res) {
+                db.models.Cases.update({ number: req.params.caseNumber }, { $set: { location: req.body.event } }).exec()
+                    .then(function (updatedCaseDetails) {
+                        res.status(200).send('Case ' + req.params.caseNumber + ' details updated.');
+                    })
+                    .catch(function (err) {
+                        res.status(500).send('Failed to check out case.');
+                    });
+            });
+
+            router.get(resource + "/:caseNumber" + "/products", function (req, res) {
+                db.models.Cases.findByCaseNumber(req.params.caseNumber)
+                    .then(function (caseDetails) {
+                        return db.models.Products.find({ caseId: caseDetails._id }).exec();
+                    })
+                    .then(function (productsInCase) {
+                        res.send(productsInCase);
+                    })
+                    .catch(function (err) {
+                        res.status(500).send('Failed to get products in case ' + req.params.caseNumber + '.');
+                    })
             });
         }
     };
