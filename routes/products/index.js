@@ -28,8 +28,8 @@ module.exports = function (router, db) {
                     });
             });
 
-            router.get(resource + "/:productId", function (req, res) {
-                db.models.Products.findOne().exec()
+            router.get(resource + "/:productBarcode", function (req, res) {
+                db.models.Products.findOne({ barcode: req.params.productBarcode }).exec()
                     .then(function (productDetails) {
                         res.send(productDetails);
                     })
@@ -38,15 +38,14 @@ module.exports = function (router, db) {
                     })
             });
 
-            router.post(resource + "/:productId" + "/assign", function (req, res) {
-                db.models.Products.update({ _id: req.params.productId }, { $set: { caseId: req.body.caseId } }).exec()
+            router.post(resource + "/:productBarcode" + "/assign", function (req, res) {
+                db.models.Products.update({ barcode: req.params.productBarcode }, { $set: { caseId: req.body.caseId } }).exec()
                     .then(function (userDetails) {
                         res.status(201).send('Product successfully assigned to case.');
                     })
                     .catch(function (err) {
                         res.status(400).send('Failed to assign product to case.');
                     });
-                res.status(501).send('Not Implemented.');
             });
         }
     };
