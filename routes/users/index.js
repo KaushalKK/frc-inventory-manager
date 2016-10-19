@@ -10,20 +10,20 @@ module.exports = function (router, db) {
 
                 userDetails.save()
                     .then(function (userDetails) {
-                        res.status(201).send(userDetails);
+                        res.status(201).send({ message: userDetails });
                     })
                     .catch(function (err) {
-                        res.status(400).send('Failed to create user.');
+                        res.status(400).send({ error: 'Failed to create user.' });
                     });
             });
 
             router.get(resource + "/:username", function (req, res) {
                 db.models.Users.findByUsername(req.params.username)
                     .then(function (userDetails) {
-                        res.send(userDetails);
+                        res.send({ message: userDetails });
                     })
                     .catch(function (err) {
-                        res.status(400).send('Failed to get user information.');
+                        res.status(400).send({ error: 'Failed to get user information.' });
                     });
             });
         }
