@@ -31,7 +31,7 @@ module.exports = function (router, db) {
             router.get(resource + "/:productBarcode", function (req, res) {
                 db.models.Products.findOne({ barcode: req.params.productBarcode }).exec()
                     .then(function (productDetails) {
-                        res.send({ message: productDetails);
+                        res.send({ message: productDetails });
                     })
                     .catch(function (err) {
                         res.status(500).send({ error: 'Failed to get product information.' });
