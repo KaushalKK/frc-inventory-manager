@@ -1,0 +1,64 @@
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Dashboard
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Dashboard</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Recent Orders</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <h4>Order Id</h4>
+                            </div>
+                            <div class="col-md-2">
+                                <h4>Date</h4>
+                            </div>
+                            <div class="col-md-2">
+                                <h4>Status</h4>
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Item</h4>
+                            </div>
+                        </div>
+                        <div class="row" ng-repeat="order in orders">
+                            <div class="col-md-2">{{order.id}}</div>
+                            <div class="col-md-2">{{order.date}}</div>
+                            <div class="col-md-2"><span class="label" ng-class="'label-success': order.status === 'checkin', 'label-info': order.status === 'checkedout'">{{order.status}}</span></div>
+                            <div class="col-md-4">{{order.item}}</div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <!-- /.box-footer -->
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <button type="button" class="btn btn-block btn-primary btn-lg">Add Case</button>
+                        <button type="button" class="btn btn-block btn-success btn-lg">Add Products</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+</div>

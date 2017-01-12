@@ -1,0 +1,22 @@
+{
+  "name": "frc-inventory-manager",
+  "description": "Inventory Management for FIRST Robotics Canada",
+  "main": "index.js",
+  "authors": [
+    "Kaushal Kapasi"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/KaushalKK/frc-inventory-manager",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.*",
+    "moment": "^2.17.1",
+    "angular-ui-router": "^0.3.2"
+  }
+}
