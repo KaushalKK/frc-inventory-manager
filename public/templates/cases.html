@@ -21,14 +21,14 @@
                             <div class="form-group ">
                                 <label for="asset_tag" class="col-md-3 control-label">Case Id</label>
                                 <div class="col-md-7 col-sm-12 required">
-                                    <input class="form-control" type="text" name="asset_tag" id="asset_tag" value="">
+                                    <input class="form-control" type="text" name="asset_tag" id="asset_tag" ng-model="caseAssetTag">
                                 </div>
                             </div>
 
                             <div class="form-group ">
                                 <label for="serial" class="col-md-3 control-label">Number</label>
                                 <div class="col-md-7 col-sm-12">
-                                    <input class="form-control" type="text" name="serial" id="serial" value="">
+                                    <input class="form-control" type="text" name="serial" id="serial" ng-model="caseNumber">
                                 </div>
                             </div>
 
@@ -36,31 +36,30 @@
                             <div class="form-group">
                                 <label for="name" class="col-md-3 control-label">Type</label>
                                 <div class="col-md-7 col-sm-12">
-                                    <select class="form-control">
-                                        <option>Case</option>
-                                        <option>Tote/Bin</option>
-                                    </select>
+                                    <select class="form-control" ng-model="type" ng-options="type.name for type in typeDropdown"></select>
                                 </div>
                             </div>
 
                             <div class="form-group ">
                                 <label for="name" class="col-md-3 control-label">Quantity</label>
                                 <div class="col-md-7 col-sm-12">
-                                    <input class="form-control" type="text" name="name" id="name" value="">
+                                    <input class="form-control" type="text" name="name" id="name" ng-model="quantity">
                                 </div>
                             </div>
 
                             <div class="form-group ">
                                 <label for="name" class="col-md-3 control-label">Status</label>
                                 <div class="col-md-7 col-sm-12">
-                                    <button type="button" class="btn btn-block btn-primary btn-flat">In Storage</button>
+                                    <button type="button" class="btn btn-block btn-flat" ng-click="toggle()" ng-class="{'btn-info': status === 'Storage', 'btn-warning': status === 'At Event'}">
+                                        {{status}}
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer text-right">
-                            <a class="btn btn-link">Cancel</a>
-                            <button type="submit" class="btn btn-success" id="submit-button" ng-click="submit-case">
+                            <a class="btn btn-link" ng-click="cancel()">Cancel</a>
+                            <button type="submit" class="btn btn-success" id="submit-button" ng-click="saveCase()">
                                 <i class="fa fa-check icon-white"></i> Save
                             </button>
                         </div>

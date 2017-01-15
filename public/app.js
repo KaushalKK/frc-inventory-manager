@@ -33,7 +33,7 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
                 templateUrl: 'templates/left-navigation.html'
             },
             'main': {
-                templateUrl: 'templates/cases.html'
+                template: '<div cases></div>'
             }
         }
     });
