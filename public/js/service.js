@@ -1,40 +1,40 @@
 "use strict";
 
 angular.module('inventorySystem').service('inventoryService', ['$http', '$q', function ($http, $q) {
-	var promiseWrap = function (request) {
-		var deferred = $q.defer();
+    var promiseWrap = function (request) {
+        var deferred = $q.defer();
 
-		request.then(function (response) {
-			deferred.resolve(response.data.message);
-		}, function (err) {
-			deferred.reject(err);
-		});
+        request.then(function (response) {
+            deferred.resolve(response.data.message);
+        }, function (err) {
+            deferred.reject(err);
+        });
 
-		return deferred.promise;
-	};
+        return deferred.promise;
+    };
 
-	this.getAllCases = function() {
+    this.getAllCases = function () {
         return promiseWrap($http({
             method: 'GET',
             url: '/cases'
         }));
     };
 
-	this.getCaseByNumber = function(caseNumber) {
+    this.getCaseByNumber = function (caseNumber) {
         return promiseWrap($http({
             method: 'GET',
             url: '/case/' + caseNumber
         }));
     };
 
-	this.getProductsInCase = function(caseNumber) {
+    this.getProductsInCase = function (caseNumber) {
         return promiseWrap($http({
             method: 'GET',
             url: '/case/' + caseNumber + '/products'
         }));
     };
 
-	this.createCase = function(caseDetails) {
+    this.createCase = function (caseDetails) {
         return promiseWrap($http({
             method: 'PUT',
             url: '/case',
@@ -45,7 +45,7 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
         }));
     };
 
-	this.updateCase = function(caseDetails) {
+    this.updateCase = function (caseDetails) {
         return promiseWrap($http({
             method: 'POST',
             url: '/case/' + caseDetails.number,
@@ -56,7 +56,7 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
         }));
     };
 
-	this.checkinCase = function(caseNumber) {
+    this.checkinCase = function (caseNumber) {
         return promiseWrap($http({
             method: 'POST',
             url: '/case/' + caseNumber + '/checkin',
@@ -66,7 +66,7 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
         }));
     };
 
-	this.checkoutCase = function(caseNumber, eventCode) {
+    this.checkoutCase = function (caseNumber, eventCode) {
         return promiseWrap($http({
             method: 'POST',
             url: '/case/' + caseNumber + '/checkout',
@@ -74,16 +74,47 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
                 'Content-Type': 'application/json'
             },
             data: {
-				event: eventCode	
-			}
+                event: eventCode
+            }
         }));
     };
 
-	/* Products */
-	this.getAllProducts = function() {
+    /* Products */
+    this.getAllProducts = function () {
         return promiseWrap($http({
             method: 'GET',
             url: '/products'
         }));
     };
+
+    this.getProductById = function (productId) {
+        return promiseWrap($http({
+            method: 'GET',
+            url: '/product/' + productId
+        }));
+    }
+
+    this.createProduct = function (productDetails) {
+        return promiseWrap($http({
+            method: 'PUT',
+            url: '/product',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: productDetails
+        }));
+    }
+
+    this.addProductToCase = function (productId, caseId) {
+        return promiseWrap($http({
+            method: 'POST',
+            url: '/product/' + productId + '/assign',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                caseId: caseId
+            }
+        }));
+    }
 }]);
