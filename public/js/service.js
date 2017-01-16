@@ -1,10 +1,12 @@
+"use strict";
+
 angular.module('inventorySystem').service('inventoryService', ['$http', '$q', function ($http, $q) {
 	var promiseWrap = function (request) {
 		var deferred = $q.defer();
 
-		request.success(function (data) {
-			deferred.resolve(data);
-		}).error(function (err) {
+		request.then(function (response) {
+			deferred.resolve(response.data.message);
+		}, function (err) {
 			deferred.reject(err);
 		});
 
@@ -78,4 +80,10 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
     };
 
 	/* Products */
+	this.getAllProducts = function() {
+        return promiseWrap($http({
+            method: 'GET',
+            url: '/products'
+        }));
+    };
 }]);

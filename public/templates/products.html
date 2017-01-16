@@ -23,9 +23,7 @@
                             <div class="col-sm-6">
                                 <div class="dataTables_length">
                                     <label>Records 
-                                        <select name="product_count" aria-controls="product_count" class="form-control input-sm" ng-options="count in productCount" ng-model="productCount">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
+                                        <select name="product_count" aria-controls="product_count" class="form-control input-sm" ng-options="count.label for count in productCountDropdown" ng-model="productCount">
                                         </select>
                                     </label>
                                 </div>
@@ -45,7 +43,9 @@
                                     <div class="col-sm-2"><h4>Quantity</h4></div>
                                 </div>
                                 <div class="row" ng-repeat="product in products">
-
+                                    <div class="col-sm-2">{{product.id}}</div>
+                                    <div class="col-sm-4">{{product.name}}</div>
+                                    <div class="col-sm-2">{{product.quantity}}</div>
                                 </div>
                             </div>
                         </div>

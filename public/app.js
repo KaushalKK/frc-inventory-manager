@@ -1,13 +1,20 @@
 "use strict";
 
 var rootModule = angular.module('inventorySystem', [
+    'ngAnimate',
+    'toastr',
     'ui.router'
 ]);
 
-rootModule.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', function ($stateProvider, $urlRouterProvider, toastrConfig) {
+
+    angular.extend(toastrConfig, {
+        positionClass: 'toast-bottom-right',
+        preventOpenDuplicates: true
+    });
 
     $urlRouterProvider.otherwise('/home');
-    
+
     $stateProvider.state('home', {
         url: '/home',
         views: {
@@ -48,7 +55,7 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', function($stateProvid
                 templateUrl: 'templates/left-navigation.html'
             },
             'main': {
-                templateUrl: 'templates/products.html'
+                template: '<div products></div>'
             }
         }
     });

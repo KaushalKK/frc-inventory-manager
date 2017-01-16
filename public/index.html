@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="inventorySystem">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +26,8 @@
 	<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
 	<!-- bootstrap wysihtml5 - text editor -->
 	<link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+	<!-- toastr css -->
+	<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.min.css">
 
 	<!-- Custom Styles -->
 	<link rel="stylesheet" href="styles/styles.css">
@@ -66,37 +69,38 @@
 	<!-- Bower Componenets -->
 	<script src="bower_components/angular/angular.min.js"></script>
 	<script src="bower_components/moment/min/moment.min.js"></script>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
-	<!-- jQuery 2.2.3 -->
-	<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="plugins/jQueryUI/jquery-ui.min.js"></script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
+	<!-- Bootstrap 3.3.6 -->
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- datepicker -->
+	<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+	<!-- Bootstrap WYSIHTML5 -->
+	<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+	<!-- Slimscroll -->
+	<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="dist/js/app.min.js"></script>
 
-<!-- App -->
-<script src="app.js"></script>
-<script src="js/home-dir.js"></script>
-<script src="js/cases-dir.js"></script>
-<script src="js/new-dir.js"></script>
-<script src="js/products-dir.js"></script>
-<script src="js/service.js"></script>
+	<!-- App -->
+	<script src="app.js"></script>
+	<script src="js/home-dir.js"></script>
+	<script src="js/cases-dir.js"></script>
+	<script src="js/new-dir.js"></script>
+	<script src="js/products-dir.js"></script>
+	<script src="js/service.js"></script>
 
 </body>
 
