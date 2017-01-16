@@ -1,4 +1,6 @@
-angular.module('inventorySystem').directive('cases', ['inventoryService', function (inventoryService) {
+"use strict";
+
+angular.module('inventorySystem').directive('cases', ['inventoryService', 'toastr', function (inventoryService, toastr) {
 	return {
 		restrict: 'AE',
 		templateUrl: '../templates/cases.html',
@@ -10,24 +12,29 @@ angular.module('inventorySystem').directive('cases', ['inventoryService', functi
 			scope.statusOptions = ["Storage", "At Event"];
 
 			function init() {
-				scope.caseAssetTag = "";
-				scope.caseNumber = "";
-				scope.type = scope.typeDropdown[0];
 				scope.quantity = "";
+				scope.caseNumber = "";
+				scope.caseAssetTag = "";
+				scope.caseDescription = "";
+				scope.type = scope.typeDropdown[0];
 				scope.status = scope.statusOptions[0];
 			}
 
 			scope.saveCase = function () {
 				var caseToSave = {
-
+					category: scope.type,
+					number: scope.caseNumber,
+					barcode: scope.caseAssetTag,
+					location: scope.status.value,
+					description: scope.caseDescription
 				};
 
 				inventoryService.createCase()
 					.then(function () {
-
+						toastr.success('Case saved.');
 					})
-					.error(function () {
-						console.log('Failed to save case');
+					.catch(function () {
+						toastr.error('Failed to save case.');
 					});
 			}
 
@@ -36,7 +43,7 @@ angular.module('inventorySystem').directive('cases', ['inventoryService', functi
 			}
 
 			scope.toggle = function () {
-				if(scope.status === scope.statusOptions[0]) {
+				if (scope.status === scope.statusOptions[0]) {
 					scope.status = scope.statusOptions[1];
 				} else {
 					scope.status = scope.statusOptions[0];
