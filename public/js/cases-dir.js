@@ -4,6 +4,7 @@ angular.module('inventorySystem').directive('cases', ['inventoryService', 'toast
 	return {
 		restrict: 'AE',
 		templateUrl: '../templates/cases.html',
+		replace: true,
 		link: function (scope) {
 			scope.typeDropdown = [
 				{ name: "Case", value: "Case" },

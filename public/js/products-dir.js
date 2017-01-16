@@ -4,6 +4,7 @@ angular.module('inventorySystem').directive('products', ['inventoryService', 'to
     return {
         restrict: 'AE',
         templateUrl: '../templates/products.html',
+		replace: true,
         link: function (scope) {
             scope.productCountDropdown = [
                 { label: '10', value: '10' },
