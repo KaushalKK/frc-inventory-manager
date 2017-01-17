@@ -13,6 +13,19 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
         return deferred.promise;
     };
 
+    /* Login */
+    this.attemptLogin = function(loginDetails) {
+        return promiseWrap($http({
+            method: 'POST',
+            url: '/login',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: loginDetails
+        }));
+    };
+
+    /* Cases */
     this.getAllCases = function () {
         return promiseWrap($http({
             method: 'GET',

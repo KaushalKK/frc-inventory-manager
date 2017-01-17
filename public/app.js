@@ -2,6 +2,7 @@
 
 var rootModule = angular.module('inventorySystem', [
     'ngAnimate',
+    'ngCookies',
     'toastr',
     'ui.router'
 ]);
@@ -13,7 +14,30 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
         preventOpenDuplicates: true
     });
 
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/login');
+
+    $stateProvider.state('login', {
+        url: '/login',
+        views: {
+            'header': {
+                templateUrl: 'templates/header.html'
+            },
+            'left-nav': {
+                template: [
+                    '<aside class="main-sidebar">',
+                        '<section class="sidebar">',
+                            '<ul class="sidebar-menu">',
+                                '<li class="header text-aqua">Menu</li>',
+                            '</ul>',
+                        '</section>',
+                    '</aside>'
+                ].join()
+            },
+            'main': {
+                template: '<div login></div>'
+            }
+        }
+    });
 
     $stateProvider.state('home', {
         url: '/home',

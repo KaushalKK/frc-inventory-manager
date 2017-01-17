@@ -33,6 +33,7 @@ module.exports = function (mongoose) {
             required: true
         },
         email: String,
+        status: String,
         password: String
     },
     {
@@ -40,7 +41,6 @@ module.exports = function (mongoose) {
     });
 
     var checkInSchema = new Schema({
-        date: Date,
         caseId: ObjectId,
         userId: ObjectId,
         productId: ObjectId
@@ -56,11 +56,11 @@ module.exports = function (mongoose) {
         },
         name: String,
         price: Number,
-        caseId: ObjectId,
         status: String,
         category: String,
         quantity: Number,
         description: String,
+        caseId: ObjectId,
         caseQuantity: Number
     },
     {
@@ -70,7 +70,8 @@ module.exports = function (mongoose) {
     var checkOutSchema = new Schema({
         caseId: ObjectId,
         userId: ObjectId,
-        productId: ObjectId
+        productId: ObjectId,
+        eventId: String
     },
     {
         timestamps: true
