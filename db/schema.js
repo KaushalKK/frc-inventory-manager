@@ -23,10 +23,6 @@ module.exports = function (mongoose) {
     });
 
     var userSchema = new Schema({
-        barcode: {
-            type: String,
-            required: true
-        },
         username: {
             type: String,
             unique: true,
