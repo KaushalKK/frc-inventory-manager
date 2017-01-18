@@ -17,7 +17,7 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
     this.attemptLogin = function(loginDetails) {
         return promiseWrap($http({
             method: 'POST',
-            url: '/login',
+            url: '/user/login',
             headers: {
                 'Content-Type': 'application/json'
             },

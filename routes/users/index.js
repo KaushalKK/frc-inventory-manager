@@ -47,7 +47,10 @@ module.exports = function (router, passport, db) {
                                     throw new Error('Failed to Login');
                                 } else {
                                     res.cookie("token", token);
-                                    res.status(200).send({ token: token });
+                                    res.status(200).send({ message: {
+                                            token: token 
+                                        }
+                                    });
                                 }
                             });
                         } else {

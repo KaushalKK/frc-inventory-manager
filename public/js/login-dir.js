@@ -13,7 +13,12 @@ angular.module("inventorySystem").directive('login', ['inventoryService', '$cook
             }
 
             scope.attemptLogin = function () {
-                inventoryService.attemptLogin()
+                var user = {
+                    username: scope.username,
+                    password: scope.password
+                };
+
+                inventoryService.attemptLogin(user)
                     .then(function (loginResp) {
                         if (loginResp.token) {
                             scope.showError = false;
