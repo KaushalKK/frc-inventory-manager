@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function (router, db) {
+module.exports = function (router, passport, db) {
     return {
         "configureRoutes": function () {
             var resource = "/case";

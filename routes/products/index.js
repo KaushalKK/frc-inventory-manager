@@ -1,7 +1,7 @@
 "use strict";
 var q = require("q");
 
-module.exports = function (router, db) {
+module.exports = function (router, passport, db) {
     return {
         "configureRoutes": function () {
             var resource = "/product";
