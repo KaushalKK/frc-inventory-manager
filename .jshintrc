@@ -9,7 +9,8 @@
 	//Globals
 	"predef": [
 		"require",
-		"module"
+		"module",
+		"angular"
 	],
 	// The Good Parts.
 	"asi": false, 		// Tolerate Automatic Semicolon Insertion (no semicolons).
