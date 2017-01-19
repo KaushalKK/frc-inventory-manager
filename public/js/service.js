@@ -105,7 +105,7 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
             method: 'GET',
             url: '/product/' + productId
         }));
-    }
+    };
 
     this.createProduct = function (productDetails) {
         return promiseWrap($http({
@@ -116,7 +116,7 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
             },
             data: productDetails
         }));
-    }
+    };
 
     this.addProductToCase = function (productId, caseId) {
         return promiseWrap($http({
@@ -129,5 +129,5 @@ angular.module('inventorySystem').service('inventoryService', ['$http', '$q', fu
                 caseId: caseId
             }
         }));
-    }
+    };
 }]);

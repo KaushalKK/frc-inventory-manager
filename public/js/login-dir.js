@@ -23,7 +23,7 @@ angular.module("inventorySystem").directive('login', ['inventoryService', '$cook
                         if (loginResp.token) {
                             scope.showError = false;
                             $cookies.put('token', loginResp.token);
-                            $state.go('home');
+                            $state.go('home.dashboard');
                         } else {
                             scope.showError = true;
                         }

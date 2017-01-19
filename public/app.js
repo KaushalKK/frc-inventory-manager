@@ -16,30 +16,8 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
 
     $urlRouterProvider.otherwise('/login');
 
-    $stateProvider.state('login', {
-        url: '/login',
-        views: {
-            'header': {
-                templateUrl: 'templates/header.html'
-            },
-            'left-nav': {
-                template: [
-                    '<aside class="main-sidebar">',
-                        '<section class="sidebar">',
-                            '<ul class="sidebar-menu">',
-                                '<li class="header text-aqua">Menu</li>',
-                            '</ul>',
-                        '</section>',
-                    '</aside>'
-                ].join()
-            },
-            'main': {
-                template: '<div login></div>'
-            }
-        }
-    });
-
     $stateProvider.state('home', {
+        abstract: true,
         url: '/home',
         views: {
             'header': {
@@ -49,51 +27,77 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
                 templateUrl: 'templates/left-navigation.html'
             },
             'main': {
+                template: '<div ui-view></div>'
+            }
+        },
+        resolve: {
+            isLoggedIn: function checkLogin($cookies, $q, $state, $timeout) {
+                var deferred = $q.defer();
+                if ($cookies.get('token')) {
+                    deferred.resolve();
+                } else {
+                    $timeout(function () {
+                        $state.go('login');
+                    });
+                    deferred.reject('Not Authenticated.');
+                }
+
+                return deferred.promise;
+            }
+        }
+    });
+
+    $stateProvider.state('login', {
+        url: '/login',
+        views: {
+            'header': {
+                templateUrl: 'templates/header.html'
+            },
+            'left-nav': {
+                template: [
+                    '<aside class="main-sidebar">',
+                    '<section class="sidebar">',
+                    '</section>',
+                    '</aside>'
+                ].join()
+            },
+            'main': {
+                template: '<div login></div>'
+            }
+        }
+    });
+
+    $stateProvider.state('home.dashboard', {
+        url: '/dashboard',
+        views: {
+            '@home': {
                 templateUrl: 'templates/dashboard.html'
             }
         }
     });
 
-    $stateProvider.state('cases', {
+    $stateProvider.state('home.cases', {
         url: '/cases',
         views: {
-            'header': {
-                templateUrl: 'templates/header.html'
-            },
-            'left-nav': {
-                templateUrl: 'templates/left-navigation.html'
-            },
-            'main': {
+            '@home': {
                 template: '<div cases></div>'
             }
         }
     });
 
-    $stateProvider.state('products', {
+    $stateProvider.state('home.products', {
         url: '/products',
         views: {
-            'header': {
-                templateUrl: 'templates/header.html'
-            },
-            'left-nav': {
-                templateUrl: 'templates/left-navigation.html'
-            },
-            'main': {
+            '@home': {
                 template: '<div products></div>'
             }
         }
     });
 
-    $stateProvider.state('new', {
+    $stateProvider.state('home.new', {
         url: '/new',
         views: {
-            'header': {
-                templateUrl: 'templates/header.html'
-            },
-            'left-nav': {
-                templateUrl: 'templates/left-navigation.html'
-            },
-            'main': {
+            '@home': {
                 templateUrl: 'templates/new.html'
             }
         }
