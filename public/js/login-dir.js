@@ -20,9 +20,10 @@ angular.module("inventorySystem").directive('login', ['inventoryService', '$cook
 
                 inventoryService.attemptLogin(user)
                     .then(function (loginResp) {
-                        if (loginResp.token) {
+                        var token = loginResp.token;
+                        if (token) {
                             scope.showError = false;
-                            $cookies.put('token', loginResp.token);
+                            $cookies.put('token', token);
                             $state.go('home.dashboard');
                         } else {
                             scope.showError = true;
@@ -30,7 +31,7 @@ angular.module("inventorySystem").directive('login', ['inventoryService', '$cook
                     })
                     .catch(function () {
                         scope.showError = true;
-                    })
+                    });
             };
 
             init();

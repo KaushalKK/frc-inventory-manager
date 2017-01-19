@@ -16,12 +16,40 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
 
     $urlRouterProvider.otherwise('/login');
 
+    $stateProvider.state('login', {
+        url: '/login',
+        views: {
+            'header': {
+                templateUrl: 'templates/header.html'
+            },
+            'left-nav': {
+                template: [
+                    '<aside class="main-sidebar">',
+                        '<section class="sidebar">',
+                        '</section>',
+                    '</aside>'
+                ].join()
+            },
+            'main': {
+                template: '<div login></div>'
+            }
+        }
+    });
+
     $stateProvider.state('home', {
         abstract: true,
         url: '/home',
         views: {
             'header': {
-                templateUrl: 'templates/header.html'
+                templateUrl: 'templates/header.html',
+                controller: function ($cookies, $scope, $state) {
+                    $scope.isLoggedIn = $cookies.get('token').length > 0 ? true : false;
+
+                    $scope.logout = function () {
+                        $cookies.remove('token');
+                        $state.go('login');
+                    };
+                }
             },
             'left-nav': {
                 templateUrl: 'templates/left-navigation.html'
@@ -43,26 +71,6 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
                 }
 
                 return deferred.promise;
-            }
-        }
-    });
-
-    $stateProvider.state('login', {
-        url: '/login',
-        views: {
-            'header': {
-                templateUrl: 'templates/header.html'
-            },
-            'left-nav': {
-                template: [
-                    '<aside class="main-sidebar">',
-                    '<section class="sidebar">',
-                    '</section>',
-                    '</aside>'
-                ].join()
-            },
-            'main': {
-                template: '<div login></div>'
             }
         }
     });
