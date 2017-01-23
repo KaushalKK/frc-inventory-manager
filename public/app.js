@@ -102,11 +102,11 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
         }
     });
 
-    $stateProvider.state('home.new', {
-        url: '/new',
+    $stateProvider.state('home.create', {
+        url: '/create',
         views: {
             '@home': {
-                templateUrl: 'templates/new.html'
+                template: '<div create></div>'
             }
         }
     });
