@@ -24,7 +24,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <h4>Order Id</h4>
+                                <h4>Asset Tag</h4>
                             </div>
                             <div class="col-md-2">
                                 <h4>Date</h4>
@@ -37,21 +37,20 @@
                             </div>
                         </div>
                         <div class="row" ng-repeat="order in orders">
-                            <div class="col-md-2">{{order.id}}</div>
-                            <div class="col-md-2">{{order.date}}</div>
+                            <div class="col-md-2">{{order.assetTag}}</div>
+                            <div class="col-md-2">{{order.updatedAt | date:'HH:mm dd/MMM/yy'}}</div>
                             <div class="col-md-2"><span class="label" ng-class="{'label-success': order.status === 'checkin', 'label-info': order.status === 'checkedout'}">{{order.status}}</span></div>
                             <div class="col-md-4">{{order.item}}</div>
                         </div>
                     </div>
                     <!-- /.box-body -->
-
-                    <!-- /.box-footer -->
                 </div>
             </div>
             <div class="col-md-4 ">
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <button type="button" class="btn btn-block btn-primary btn-lg" ui-sref="home.create">Create Items</button>
+                        <button type="button" class="btn btn-block btn-secondary btn-lg">Check-In / Check-Out</button>
                     </div>
                 </div>
             </div>

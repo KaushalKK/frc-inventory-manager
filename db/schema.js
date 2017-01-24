@@ -2,7 +2,6 @@
 
 module.exports = function (mongoose) {
     var Schema = mongoose.Schema;
-    var ObjectId = Schema.Types.ObjectId;
 
     var userSchema = new Schema({
         username: {
@@ -54,29 +53,20 @@ module.exports = function (mongoose) {
         timestamps: true
     });
 
-    var checkInSchema = new Schema({
+    var orderSchema = new Schema({
+        user: String,
+        status: String,
         assetTag: String,
-        userId: ObjectId,
+        location: String
     },
     {
         timestamps: true
     });
-
-    var checkOutSchema = new Schema({
-        assetTag: String,
-        userId: ObjectId,
-        eventId: String
-    },
-    {
-        timestamps: true
-    });
-
 
     return {
         case: caseSchema,
         user: userSchema,
-        checkIn: checkInSchema,
-        product: productSchema,
-        checkOut: checkOutSchema
+        order: orderSchema,
+        product: productSchema
     };
 };

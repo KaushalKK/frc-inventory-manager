@@ -12,15 +12,13 @@ module.exports = function (mongoose, dbSchema) {
 
     var caseModel = mongoose.model('Cases', dbSchema.case);
     var userModel = mongoose.model('Users', dbSchema.user);
-    var checkInModel = mongoose.model('CheckIns', dbSchema.checkIn);
+    var orderModel = mongoose.model('Orders', dbSchema.order);
     var productModel = mongoose.model('Products', dbSchema.product);
-    var checkOutModel = mongoose.model('CheckOuts', dbSchema.checkOut);
 
     return {
         cases: caseModel,
         users: userModel,
-        checkIns: checkInModel,
-        products: productModel,
-        checkOuts: checkOutModel
+        orders: orderModel,
+        products: productModel
     };
 };

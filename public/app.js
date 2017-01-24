@@ -110,4 +110,13 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
             }
         }
     });
+
+    $stateProvider.state('home.orders', {
+        url: '/orders',
+        views: {
+            '@home': {
+                template: '<div orders></div>'
+            }
+        }
+    });
 }]);

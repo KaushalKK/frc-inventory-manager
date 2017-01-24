@@ -20,6 +20,15 @@
     padding-right: 5px;
 }
 
+.orders-icon:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    content: "\f276";
+    padding-right: 5px;
+}
+
 .save-icon:before {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
