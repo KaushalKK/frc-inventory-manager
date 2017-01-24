@@ -1,3 +1,30 @@
 .logout-btn {
     padding: 8px 5px;
 }
+
+.logout-icon:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    content: "\f13e";
+    padding-right: 5px;
+}
+
+.login-icon:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    content: "\f023";
+    padding-right: 5px;
+}
+
+.save-icon:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    content: "\f00c";
+    padding-right: 5px;
+}
