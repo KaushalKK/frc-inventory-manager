@@ -5,7 +5,7 @@ module.exports = function (router, passport, db) {
         "configureRoutes": function () {
             var resource = "/case";
 
-            router.put(resource, function (req, res) {
+            router.put(resource, passport.authenticate("jwt", { session: false }), function (req, res) {
                 var caseDetails = new db.models.Cases(req.body);
 
                 caseDetails.save()
@@ -19,7 +19,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.get(resource + "s", function (req, res) {
+            router.get(resource + "s", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Cases.find({}).exec()
                     .then(function (allCases) {
                         res.send({
@@ -31,7 +31,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.get(resource + "/:caseNumber", function (req, res) {
+            router.get(resource + "/:caseNumber", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Cases.findByCaseNumber(req.params.caseNumber)
                     .then(function (caseDetails) {
                         res.send({
@@ -43,7 +43,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.post(resource + "/:caseNumber", function (req, res) {
+            router.post(resource + "/:caseNumber", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Cases.update({ number: req.params.caseNumber }, req.body, { overwrite: true }).exec()
                     .then(function (updatedCaseDetails) {
                         res.status(200).send({ message: 'Case ' + req.params.caseNumber + ' details updated.' });
@@ -53,7 +53,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.post(resource + "/:caseNumber" + "/checkin", function (req, res) {
+            router.post(resource + "/:caseNumber" + "/checkin", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Cases.update({ number: req.params.caseNumber }, { $set: { location: 'home' } }).exec()
                     .then(function (updatedCaseDetails) {
                         res.status(200).send({ message: 'Case ' + req.params.caseNumber + ' check in confirmed.' });
@@ -63,7 +63,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.post(resource + "/:caseNumber" + "/checkout", function (req, res) {
+            router.post(resource + "/:caseNumber" + "/checkout", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Cases.update({ number: req.params.caseNumber }, { $set: { location: req.body.event } }).exec()
                     .then(function (updatedCaseDetails) {
                         res.status(200).send({ message: 'Case ' + req.params.caseNumber + ' check out confirmed.' });
@@ -73,7 +73,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.get(resource + "/:caseNumber" + "/products", function (req, res) {
+            router.get(resource + "/:caseNumber" + "/products", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Cases.findByCaseNumber(req.params.caseNumber)
                     .then(function (caseDetails) {
                         return db.models.Products.find({ caseId: caseDetails._id }).exec();

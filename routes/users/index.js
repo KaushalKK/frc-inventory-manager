@@ -33,7 +33,7 @@ module.exports = function (router, passport, db) {
                     "username": req.body.username,
                 };
                 var options = {
-                    "algorithm": "RS256",
+                    "algorithm": "HS256",
                     "expiresIn": "3D",
                     "issuer": "canfrc"
                 };
@@ -62,10 +62,10 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.get(resource + "/:username", function (req, res) {
+            router.get(resource + "/:username", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Users.findByUsername(req.params.username)
                     .then(function (userDetails) {
-                        res.send({ message: userDetails });
+                        res.status(200).send({ message: userDetails });
                     })
                     .catch(function () {
                         res.status(400).send({ error: 'Failed to get user information.' });

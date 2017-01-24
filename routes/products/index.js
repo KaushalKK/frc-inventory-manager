@@ -6,7 +6,7 @@ module.exports = function (router, passport, db) {
         "configureRoutes": function () {
             var resource = "/product";
 
-            router.put(resource, function (req, res) {
+            router.put(resource, passport.authenticate("jwt", { session: false }), function (req, res) {
                 var productDetails = new db.models.Products(req.body);
 
                 productDetails.save()
@@ -18,7 +18,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.get(resource + "s", function (req, res) {
+            router.get(resource + "s", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Products.find({}).exec()
                     .then(function (allProducts) {
                         res.send({ message: allProducts });
@@ -28,7 +28,7 @@ module.exports = function (router, passport, db) {
                     });
             });
 
-            router.get(resource + "/:productBarcode", function (req, res) {
+            router.get(resource + "/:productBarcode", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Products.findOne({ barcode: req.params.productBarcode }).exec()
                     .then(function (productDetails) {
                         res.send({ message: productDetails });
@@ -38,7 +38,7 @@ module.exports = function (router, passport, db) {
                     })
             });
 
-            router.post(resource + "/:productBarcode" + "/assign", function (req, res) {
+            router.post(resource + "/:productBarcode" + "/assign", passport.authenticate("jwt", { session: false }), function (req, res) {
                 db.models.Products.update({ barcode: req.params.productBarcode }, { $set: { caseId: req.body.caseId } }).exec()
                     .then(function (userDetails) {
                         res.status(201).send({ message: 'Product successfully assigned to case.' });
