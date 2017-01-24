@@ -13,67 +13,51 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <form id="create-form" class="form-horizontal" method="post" action="" autocomplete="off" role="form" enctype="multipart/form-data">
-                    <div class="box box-default">
-                        <div class="box-body">
-                            <!-- Asset Tag -->
-                            <div class="form-group ">
-                                <label for="asset_tag" class="col-md-3 control-label">Case Id</label>
-                                <div class="col-md-7 col-sm-12 required">
-                                    <input class="form-control" type="text" name="asset_tag" id="asset_tag" ng-model="caseAssetTag">
-                                </div>
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="serial" class="col-md-3 control-label">Number</label>
-                                <div class="col-md-7 col-sm-12">
-                                    <input class="form-control" type="text" name="serial" id="serial" ng-model="caseNumber">
-                                </div>
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="serial" class="col-md-3 control-label">Description</label>
-                                <div class="col-md-7 col-sm-12">
-                                    <input class="form-control" type="text" name="<descript></descript>ion" id="description" ng-model="caseDescription">
-                                </div>
-                            </div>
-
-                            <!-- Asset Name -->
-                            <div class="form-group">
-                                <label for="name" class="col-md-3 control-label">Type</label>
-                                <div class="col-md-7 col-sm-12">
-                                    <select class="form-control" ng-model="type" ng-options="type.name for type in typeDropdown"></select>
-                                </div>
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="name" class="col-md-3 control-label">Quantity</label>
-                                <div class="col-md-7 col-sm-12">
-                                    <input class="form-control" type="text" name="name" id="name" ng-model="quantity">
-                                </div>
-                            </div>
-
-                            <div class="form-group ">
-                                <label for="name" class="col-md-3 control-label">Status</label>
-                                <div class="col-md-7 col-sm-12">
-                                    <button type="button" class="btn btn-block btn-flat" ng-click="toggle()" ng-class="{'btn-info': status === 'Storage', 'btn-warning': status === 'At Event'}">
-                                        {{status}}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer text-right">
-                            <a class="btn btn-link" ng-click="cancel()">Cancel</a>
-                            <button type="submit" class="btn btn-success" id="submit-button" ng-click="saveCase()">
-                                <i class="fa fa-check icon-white"></i> Save
-                            </button>
-                        </div>
-                        <!-- /.box-footer -->
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Case List</h3>
                     </div>
-                    <!-- /.box -->
-                </form>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="dataTables_length">
+                                    <label>Records 
+                                        <select name="caseCount" aria-controls="caseCount" class="form-control input-sm" ng-options="count.label for count in caseCountDropdown" ng-model="caseCount">
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div id="caseSearch" class="dataTables_filter">
+                                    <label>Search:<input type="search" class="form-control input-sm" ng-model="caseSearchTerm"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <h4>Asset Tag</h4>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <h4>Case Id</h4>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <h4>Description</h4>
+                                    </div>
+                                </div>
+                                <div class="row" ng-repeat="case in cases">
+                                    <div class="col-sm-2">{{case.assetTag}}</div>
+                                    <div class="col-sm-4">{{case.number}}</div>
+                                    <div class="col-sm-2">{{case.description}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -23,28 +23,6 @@ angular.module('inventorySystem').directive('products', ['inventoryService', 'to
                     });
             };
 
-            scope.createProduct = function () {
-                var productDetails = {
-                    status: scope.status,
-                    name: scope.productName,
-                    price: scope.productCost,
-                    barcode: scope.productId,
-                    caseId: scope.caseId || "",
-                    category: scope.productCategory,
-                    quantity: scope.productQuantity,
-                    description: scope.productDescription,
-                    caseQuantity: scope.productsInCase || 0
-                };
-
-                inventoryService.createProduct(productDetails)
-                    .then(function () {
-                        toastr.success('Product Created');
-                    })
-                    .catch(function () {
-                        toastr.error('Failed to Create Product.');
-                    });
-            };
-
             function init() {
                 scope.productCount = scope.productCountDropdown[0];
                 scope.search = '';

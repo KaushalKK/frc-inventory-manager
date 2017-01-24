@@ -30,7 +30,7 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 			scope.createItem = function () {
 				var itemToSave = {
 					location: scope.status,
-					barcode: scope.assetTag,
+					assetTag: scope.assetTag,
 					category: scope.type.value,
 					description: scope.description
 				};
@@ -40,6 +40,7 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 
 					inventoryService.createCase(itemToSave)
 						.then(function () {
+							init();
 							toastr.success('Case saved.');
 						})
 						.catch(function () {
@@ -55,6 +56,7 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 
 					inventoryService.createProduct(itemToSave)
 						.then(function () {
+							init();
 							toastr.success('Case saved.');
 						})
 						.catch(function () {
@@ -72,7 +74,6 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 					scope.status = scope.statusOptions[1];
 				} else {
 					scope.status = scope.statusOptions[0];
-
 				}
 			}
 

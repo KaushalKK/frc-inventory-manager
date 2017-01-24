@@ -6,51 +6,29 @@ angular.module('inventorySystem').directive('cases', ['inventoryService', 'toast
 		templateUrl: '../templates/cases.html',
 		replace: true,
 		link: function (scope) {
-			scope.typeDropdown = [
-				{ name: "Case", value: "Case" },
-				{ name: "Tote / Bin", value: "Tote / Bin" }
-			];
-			scope.statusOptions = ["Storage", "At Event"];
+			scope.caseCountDropdown = [
+                { label: '10', value: '10' },
+                { label: '25', value: '25' }
+            ];
+            scope.cases = [];
 
-			function init() {
-				scope.quantity = "";
-				scope.caseNumber = "";
-				scope.caseAssetTag = "";
-				scope.caseDescription = "";
-				scope.type = scope.typeDropdown[0];
-				scope.status = scope.statusOptions[0];
-			}
+            scope.getCases = function () {
+                inventoryService.getAllCases()
+                    .then(function (data) {
+                        scope.cases = data;
+                    })
+                    .catch(function () {
+                        scope.cases = [];
+                        toastr.error('Failed to get Cases');
+                    });
+            };
 
-			scope.saveCase = function () {
-				var caseToSave = {
-					category: scope.type,
-					number: scope.caseNumber,
-					barcode: scope.caseAssetTag,
-					location: scope.status.value,
-					description: scope.caseDescription
-				};
+            function init() {
+                scope.caseCount = scope.caseCountDropdown[0];
+                scope.search = '';
 
-				inventoryService.createCase()
-					.then(function () {
-						toastr.success('Case saved.');
-					})
-					.catch(function () {
-						toastr.error('Failed to save case.');
-					});
-			}
-
-			scope.cancel = function () {
-				init();
-			}
-
-			scope.toggle = function () {
-				if (scope.status === scope.statusOptions[0]) {
-					scope.status = scope.statusOptions[1];
-				} else {
-					scope.status = scope.statusOptions[0];
-
-				}
-			}
+                scope.getCases();
+            }
 
 			init();
 		}
