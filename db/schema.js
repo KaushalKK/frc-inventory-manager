@@ -4,8 +4,22 @@ module.exports = function (mongoose) {
     var Schema = mongoose.Schema;
     var ObjectId = Schema.Types.ObjectId;
 
+    var userSchema = new Schema({
+        username: {
+            type: String,
+            unique: true,
+            required: true
+        },
+        email: String,
+        status: String,
+        password: String
+    },
+    {
+        timestamps: true
+    });
+
     var caseSchema = new Schema({
-        barcode: {
+        assetTag: {
             type: String,
             required: true
         },
@@ -22,31 +36,8 @@ module.exports = function (mongoose) {
         timestamps: true
     });
 
-    var userSchema = new Schema({
-        username: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        email: String,
-        status: String,
-        password: String
-    },
-    {
-        timestamps: true
-    });
-
-    var checkInSchema = new Schema({
-        caseId: ObjectId,
-        userId: ObjectId,
-        productId: ObjectId
-    },
-    {
-        timestamps: true
-    });
-
     var productSchema = new Schema({
-        barcode: {
+        assetTag: {
             type: String,
             required: true
         },
@@ -56,17 +47,24 @@ module.exports = function (mongoose) {
         category: String,
         quantity: Number,
         description: String,
-        caseId: ObjectId,
+        caseNumber: Number,
         caseQuantity: Number
     },
     {
         timestamps: true
     });
 
-    var checkOutSchema = new Schema({
-        caseId: ObjectId,
+    var checkInSchema = new Schema({
+        assetTag: String,
         userId: ObjectId,
-        productId: ObjectId,
+    },
+    {
+        timestamps: true
+    });
+
+    var checkOutSchema = new Schema({
+        assetTag: String,
+        userId: ObjectId,
         eventId: String
     },
     {
