@@ -17,37 +17,28 @@ module.exports = function (mongoose) {
         timestamps: true
     });
 
-    var caseSchema = new Schema({
+    var assetSchema = new Schema({
         assetTag: {
             type: String,
-            required: true
-        },
-        number: {
-            type: Number,
             unique: true,
             required: true
         },
-        category: String,
-        location: String,
-        description: String
-    },
-    {
-        timestamps: true
-    });
-
-    var productSchema = new Schema({
-        assetTag: {
+        type: {
             type: String,
-            required: true
+            enum: ['product', 'case', 'tote'],
+            default: 'product'
         },
         name: String,
-        price: Number,
-        status: String,
-        category: String,
-        quantity: Number,
         description: String,
-        caseNumber: Number,
-        caseQuantity: Number
+        caseNumber: {
+            type: Number,
+            unique: true
+        },
+        inCase: {
+            status: Boolean,
+            case: Number,
+            quantity: Number
+        }
     },
     {
         timestamps: true
@@ -55,7 +46,11 @@ module.exports = function (mongoose) {
 
     var orderSchema = new Schema({
         user: String,
-        status: String,
+        status: {
+            type: String,
+            enum: ['checkin', 'checkout'],
+            default: 'checkin'
+        },
         assetTag: String,
         location: String,
         productName: String
@@ -65,9 +60,8 @@ module.exports = function (mongoose) {
     });
 
     return {
-        case: caseSchema,
         user: userSchema,
-        order: orderSchema,
-        product: productSchema
+        asset: assetSchema,
+        order: orderSchema
     };
 };
