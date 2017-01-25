@@ -1,12 +1,12 @@
 "use strict";
 
-angular.module('inventorySystem').directive('orders', ['inventoryService', 'toastr', function (inventoryService, toastr) {
-	return {
-		restrict: 'AE',
-		templateUrl: '../templates/orders.html',
-		replace: true,
-		link: function (scope) {
-			scope.ordersCountDropdown = [
+angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventoryService', 'toastr', function ($uibModal, inventoryService, toastr) {
+    return {
+        restrict: 'AE',
+        templateUrl: '../templates/orders.html',
+        replace: true,
+        link: function (scope) {
+            scope.ordersCountDropdown = [
                 { label: '10', value: '10' },
                 { label: '25', value: '25' }
             ];
@@ -23,14 +23,57 @@ angular.module('inventorySystem').directive('orders', ['inventoryService', 'toas
                     });
             };
 
+            scope.changeStatus = function (statusType) {
+                $uibModal.open({
+                    templateUrl: '../templates/' + statusType + '.html',
+                    size: 'large',
+                    windowClass: 'modal',
+                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                        $scope.districtEvents = [
+                            { label: 'Durham', value: 'durham' },
+                            { label: 'Ryerson', value: 'ryerson' },
+                            { label: 'Victoria Park', value: 'vicpark' },
+                            { label: 'Waterloo', value: 'waterloo' },
+                            { label: 'Georgian', value: 'georgian' },
+                            { label: 'Windsor', value: 'windsor' },
+                            { label: 'Western', value: 'western' },
+                            { label: 'North Bay', value: 'northbay' },
+                            { label: 'McMaster', value: 'mac' },
+                            { label: 'District Championship', value: 'districtcmp' }
+                        ];
+                        $scope.warehouse = { label: 'FIRST Canada Warehouse', value: 'warehouse' };
+                        $scope.successButtonText = (statusType === 'checkin' ? 'Check In' : 'Check Out');
+                        $scope.closeModal = function () {
+                            $uibModalInstance.dismiss('Cancel');
+                            scope.getOrders();
+                        };
+                        $scope.submitOrder = function () {
+                            $uibModalInstance.close('Order Submitted');
+                        };
+                        $uibModalInstance.result.then(function () {
+                            setTimeout(function () {
+                                scope.getOrders();
+                            }, 400);
+                        }, function () {
+                            setTimeout(function () {
+                                scope.getOrders();
+                                toastr.warning('Cancelled Check ' + (statusType === 'checkin' ? 'In ' : 'Out'), {
+                                    timeOut: 500
+                                });
+                            }, 400);
+                        });
+                    }]
+                });
+            };
+
             function init() {
                 scope.ordersCount = scope.ordersCountDropdown[0];
-                scope.search = '';
+                scope.orderSearchTerm = '';
 
                 scope.getOrders();
             }
 
-			init();
-		}
-	}
+            init();
+        }
+    }
 }]);
