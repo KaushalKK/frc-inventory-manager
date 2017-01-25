@@ -48,7 +48,21 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                             scope.getOrders();
                         };
                         $scope.submitOrder = function () {
-                            $uibModalInstance.close('Order Submitted');
+                            var orderDetails = {
+                                status: statusType,
+                                assetTag: $scope.assetTag,
+                                location: statusType === 'checkin' ? 'warehouse' : $scope.location.value
+                            };
+
+                            inventoryService.createOrder(orderDetails)
+                                .then(function () {
+                                    $uibModalInstance.close('Order Submitted');
+                                })
+                                .catch(function () {
+                                    toastr.warning('Cancelled Check ' + (statusType === 'checkin' ? 'In ' : 'Out'), {
+                                        timeOut: 500
+                                    });
+                                });
                         };
                         $uibModalInstance.result.then(function () {
                             setTimeout(function () {

@@ -7,11 +7,18 @@ module.exports = function (router, passport, db) {
 			var resource = "/order";
 
 			router.put(resource, passport.authenticate("jwt", { session: false }), function (req, res) {
-				var orderDetails = new db.models.Orders(req.body);
+				var order = req.body;
+				order.user = req.user.username;
 
-				orderDetails.save()
-					.then(function (orderDetails) {
-						res.status(201).send({ message: orderDetails });
+				db.models.Cases.findOne({ assetTag: order.assetTag }).exec()
+					.then(function (asset) {
+						order.productName = asset.name;
+						var orderDetails = new db.models.Orders(order);
+
+						return orderDetails.save(orderDetails);
+					})
+					.then(function (createdOrderDetails) {
+						res.status(201).send({ message: createdOrderDetails });
 					})
 					.catch(function (err) {
 						res.status(400).send({ error: 'Failed to create order.' });
@@ -36,16 +43,6 @@ module.exports = function (router, passport, db) {
 					.catch(function (err) {
 						res.status(500).send({ error: 'Failed to get order information.' });
 					})
-			});
-
-			router.post(resource + "/:orderId" + "/checkin", passport.authenticate("jwt", { session: false }), function (req, res) {
-				db.models.Products.update({ barcode: req.params.orderId }, { $set: { caseId: req.body.caseId } }).exec()
-					.then(function (userDetails) {
-						res.status(201).send({ message: 'Product successfully assigned to case.' });
-					})
-					.catch(function (err) {
-						res.status(400).send({ error: 'Failed to assign product to case.' });
-					});
 			});
 		}
 	};

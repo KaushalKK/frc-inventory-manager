@@ -47,16 +47,24 @@
                                         <h4>Asset Tag</h4>
                                     </div>
                                     <div class="col-sm-2">
+                                        <h4>Name</h4>
+                                    </div>
+                                    <div class="col-sm-2">
                                         <h4>Status</h4>
                                     </div>
                                     <div class="col-sm-2">
                                         <h4>Location</h4>
                                     </div>
+                                    <div class="col-sm-2">
+                                        <h4>Updated</h4>
+                                    </div>
                                 </div>
                                 <div class="row" ng-repeat="order in orders">
                                     <div class="col-sm-2">{{order.assetTag}}</div>
-                                    <div class="col-sm-2">{{order.status}}</div>
-                                    <div class="col-sm-4"><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.location}}</span></div>
+                                    <div class="col-sm-2">{{order.name}}</div>
+                                    <div class="col-sm-2">{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</div>
+                                    <div class="col-sm-2"><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.location | uppercase}}</span></div>
+                                    <div class="col-sm-2">{{order.updatedAt | date:'h:mma dd-MMM-yy'}}</div>
                                 </div>
                             </div>
                         </div>

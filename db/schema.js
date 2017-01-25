@@ -57,7 +57,8 @@ module.exports = function (mongoose) {
         user: String,
         status: String,
         assetTag: String,
-        location: String
+        location: String,
+        productName: String
     },
     {
         timestamps: true
