@@ -4,6 +4,7 @@ var rootModule = angular.module('inventorySystem', [
     'ngAnimate',
     'ngCookies',
     'toastr',
+    'ui.bootstrap',
     'ui.router'
 ]);
 
