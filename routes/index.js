@@ -10,10 +10,12 @@ module.exports = function (config) {
     var userResource = require('./users');
 
     var caseResource = require('./cases');
+    var orderResource = require('./orders');
     var productResource = require('./products');
 
     userResource(router, passport, db).configureRoutes();
     caseResource(router, passport, db).configureRoutes();
+    orderResource(router, passport, db).configureRoutes();
     productResource(router, passport, db).configureRoutes();
 
     return router;

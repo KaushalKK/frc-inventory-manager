@@ -44,7 +44,7 @@ module.exports = function (router, passport, db) {
                         if (userLoginResult) {
                             jwt.sign(payload, cert, options, function (err, token) {
                                 if (err) {
-                                    throw new Error('Failed to Login');
+                                    throw Error('Failed to Login');
                                 } else {
                                     res.cookie("token", token);
                                     res.status(200).send({ message: {
@@ -54,7 +54,7 @@ module.exports = function (router, passport, db) {
                                 }
                             });
                         } else {
-                            throw new Error('Failed to Login');
+                            throw Error('Failed to Login');
                         }
                     })
                     .catch(function () {
