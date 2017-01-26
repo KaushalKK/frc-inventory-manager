@@ -20,7 +20,10 @@ module.exports = function (router, passport, db) {
 						res.status(201).send({ message: createdOrderDetails });
 					})
 					.catch(function (err) {
-						res.status(400).send({ error: 'Failed to create order.' });
+						res.status(400).send({
+							error: 'Failed to create order.',
+							details: err.toString()
+						});
 					});
 			});
 
@@ -30,7 +33,10 @@ module.exports = function (router, passport, db) {
 						res.send({ message: allOrders });
 					})
 					.catch(function (err) {
-						res.status(400).send({ error: 'Failed to get orders.' });
+						res.status(400).send({
+							error: 'Failed to get orders.',
+							details: err.toString()
+						});
 					});
 			});
 
@@ -40,7 +46,10 @@ module.exports = function (router, passport, db) {
 						res.send({ message: orderDetails });
 					})
 					.catch(function (err) {
-						res.status(400).send({ error: 'Failed to get order information.' });
+						res.status(400).send({
+							error: 'Failed to get order information.',
+							details: err.toString()
+						});
 					});
 			});
 		}

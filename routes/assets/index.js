@@ -14,7 +14,10 @@ module.exports = function (router, passport, db) {
                         res.status(201).send({ message: assetDetails });
                     })
                     .catch(function () {
-                        res.status(400).send({ error: 'Failed to create asset.' });
+                        res.status(400).send({
+                            error: 'Failed to create asset.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -24,7 +27,10 @@ module.exports = function (router, passport, db) {
                         res.send({ message: allAssets });
                     })
                     .catch(function (err) {
-                        res.status(400).send({ error: 'Failed to get assets.' });
+                        res.status(400).send({
+                            error: 'Failed to get assets.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -34,7 +40,10 @@ module.exports = function (router, passport, db) {
                         res.send({ message: allCasesAndTotes });
                     })
                     .catch(function (err) {
-                        res.status(400).send({ error: 'Failed to get cases and totes.' });
+                        res.status(400).send({
+                            error: 'Failed to get cases and totes.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -44,7 +53,10 @@ module.exports = function (router, passport, db) {
                         res.send({ message: allProducts });
                     })
                     .catch(function (err) {
-                        res.status(400).send({ error: 'Failed to get products.' });
+                        res.status(400).send({
+                            error: 'Failed to get products.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -54,7 +66,10 @@ module.exports = function (router, passport, db) {
                         res.send({ message: assetDetails });
                     })
                     .catch(function (err) {
-                        res.status(400).send({ error: 'Failed to get asset information.' });
+                        res.status(400).send({
+                            error: 'Failed to get asset information.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -64,7 +79,10 @@ module.exports = function (router, passport, db) {
                         res.status(201).send({ message: assetDetails });
                     })
                     .catch(function (err) {
-                        res.status(400).send({ error: 'Failed to assign asset to case.' });
+                        res.status(400).send({
+                            error: 'Failed to assign asset to case.',
+                            details: err.toString()
+                        });
                     });
             });
         }

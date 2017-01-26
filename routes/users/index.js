@@ -23,8 +23,11 @@ module.exports = function (router, passport, db) {
                     .then(function (userDetails) {
                         res.status(201).send({ message: userDetails });
                     })
-                    .catch(function () {
-                        res.status(400).send({ error: 'Failed to create user.' });
+                    .catch(function (err) {
+                        res.status(400).send({
+                            error: 'Failed to create user.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -47,8 +50,9 @@ module.exports = function (router, passport, db) {
                                     throw Error('Failed to Login');
                                 } else {
                                     res.cookie("token", token);
-                                    res.status(200).send({ message: {
-                                            token: token 
+                                    res.status(200).send({
+                                        message: {
+                                            token: token
                                         }
                                     });
                                 }
@@ -57,8 +61,11 @@ module.exports = function (router, passport, db) {
                             throw Error('Failed to Login');
                         }
                     })
-                    .catch(function () {
-                        res.status(400).send({ error: 'Failed to login.' });
+                    .catch(function (err) {
+                        res.status(400).send({
+                            error: 'Failed to login.',
+                            details: err.toString()
+                        });
                     });
             });
 
@@ -67,8 +74,11 @@ module.exports = function (router, passport, db) {
                     .then(function (userDetails) {
                         res.status(200).send({ message: userDetails });
                     })
-                    .catch(function () {
-                        res.status(400).send({ error: 'Failed to get user information.' });
+                    .catch(function (err) {
+                        res.status(400).send({
+                            error: 'Failed to get user information.',
+                            details: err.toString()
+                        });
                     });
             });
         }
