@@ -1,5 +1,4 @@
 "use strict";
-var q = require("q");
 
 module.exports = function (router, passport, db) {
 	return {
@@ -42,7 +41,7 @@ module.exports = function (router, passport, db) {
 					})
 					.catch(function (err) {
 						res.status(400).send({ error: 'Failed to get order information.' });
-					})
+					});
 			});
 		}
 	};

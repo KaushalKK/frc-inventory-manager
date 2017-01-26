@@ -1,5 +1,4 @@
 "use strict";
-var q = require("q");
 
 module.exports = function (router, passport, db) {
     return {
@@ -14,7 +13,7 @@ module.exports = function (router, passport, db) {
                     .then(function (assetDetails) {
                         res.status(201).send({ message: assetDetails });
                     })
-                    .catch(function (err) {
+                    .catch(function () {
                         res.status(400).send({ error: 'Failed to create asset.' });
                     });
             });
@@ -25,7 +24,7 @@ module.exports = function (router, passport, db) {
                         res.send({ message: allAssets });
                     })
                     .catch(function (err) {
-                        res.status(400).send({ error: 'Failed to get cases and totes.' });
+                        res.status(400).send({ error: 'Failed to get assets.' });
                     });
             });
 
@@ -56,7 +55,7 @@ module.exports = function (router, passport, db) {
                     })
                     .catch(function (err) {
                         res.status(400).send({ error: 'Failed to get asset information.' });
-                    })
+                    });
             });
 
             router.post(resource + "/:assetTag" + "/assign", passport.authenticate("jwt", { session: false }), function (req, res) {
