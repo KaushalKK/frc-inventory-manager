@@ -6,14 +6,14 @@ module.exports = function (dbConfig) {
     var options = {
         promiseLibrary: require('q'),
         server: { auto_reconnect: false },
-        user: 'admin',
-        pass: process.argv[3],
+        user: dbConfig.username,
+        pass: new Buffer(dbConfig.password, 'base64').toString("ascii"),
         auth: {
             authMechanism: 'SCRAM-SHA-1',
-            authSource: 'admin'
+            authSource: dbConfig.authDb
         }
     };
-    var db = mongoose.connect(dbConfig, options);
+    var db = mongoose.connect(dbConfig.url, options);
 
     mongoose.Promise = require('q').Promise;
 
