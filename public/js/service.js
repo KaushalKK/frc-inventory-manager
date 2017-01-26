@@ -26,11 +26,24 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
         }));
     };
 
+    /* Assets */
+    this.createAsset = function (assetDetails) {
+        return promiseWrap($http({
+            method: 'PUT',
+            url: '/asset',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'JWT ' + $cookies.get('token')
+            },
+            data: assetDetails
+        }));
+    };
+
     /* Cases */
     this.getAllCases = function () {
         return promiseWrap($http({
             method: 'GET',
-            url: '/cases',
+            url: '/asset/cases',
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }
@@ -40,44 +53,10 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
     this.getCaseByNumber = function (caseNumber) {
         return promiseWrap($http({
             method: 'GET',
-            url: '/case/' + caseNumber,
+            url: '/asset/case/' + caseNumber,
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }
-        }));
-    };
-
-    this.getProductsInCase = function (caseNumber) {
-        return promiseWrap($http({
-            method: 'GET',
-            url: '/case/' + caseNumber + '/products',
-            headers: {
-                'Authorization': 'JWT ' + $cookies.get('token')
-            }
-        }));
-    };
-
-    this.createCase = function (caseDetails) {
-        return promiseWrap($http({
-            method: 'PUT',
-            url: '/case',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'JWT ' + $cookies.get('token')
-            },
-            data: caseDetails
-        }));
-    };
-
-    this.updateCase = function (caseDetails) {
-        return promiseWrap($http({
-            method: 'POST',
-            url: '/case/' + caseDetails.number,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'JWT ' + $cookies.get('token')
-            },
-            data: caseDetails
         }));
     };
 
@@ -85,50 +64,41 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
     this.getAllProducts = function () {
         return promiseWrap($http({
             method: 'GET',
-            url: '/products',
+            url: '/asset/products',
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }
         }));
     };
 
-    this.getProductById = function (productId) {
-        return promiseWrap($http({
-            method: 'GET',
-            url: '/product/' + productId,
-            headers: {
-                'Authorization': 'JWT ' + $cookies.get('token')
-            }
-        }));
-    };
-
-    this.createProduct = function (productDetails) {
-        return promiseWrap($http({
-            method: 'PUT',
-            url: '/product',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'JWT ' + $cookies.get('token')
-            },
-            data: productDetails
-        }));
-    };
-
-    this.addProductToCase = function (productId, caseId) {
+    this.addProductToCase = function (assetTag, caseNumber, quantity) {
         return promiseWrap($http({
             method: 'POST',
-            url: '/product/' + productId + '/assign',
+            url: '/asset/' + assetTag + '/assign',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'JWT ' + $cookies.get('token')
             },
             data: {
-                caseId: caseId
+                caseNumber: caseNumber,
+                quantity: quantity
             }
         }));
     };
 
     /* Orders */
+    this.createOrder = function (orderDetails) {
+        return promiseWrap($http({
+            method: 'PUT',
+            url: '/order',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'JWT ' + $cookies.get('token')
+            },
+            data: orderDetails
+        }));
+    };
+
     this.getAllOrders = function () {
         return promiseWrap($http({
             method: 'GET',
@@ -146,18 +116,6 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }
-        }));
-    };
-
-    this.createOrder = function (orderDetails) {
-        return promiseWrap($http({
-            method: 'PUT',
-            url: '/order',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'JWT ' + $cookies.get('token')
-            },
-            data: orderDetails
         }));
     };
 }]);

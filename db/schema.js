@@ -35,11 +35,17 @@ module.exports = function (mongoose) {
             unique: true
         },
         inCase: {
-            status: Boolean,
-            case: Number,
+            status: {
+                type: Boolean,
+                default: false
+            },
+            case: {
+                type: Number,
+                default: null
+            },
             quantity: {
                 type: Number,
-                default: 1
+                default: 0
             }
         }
     },

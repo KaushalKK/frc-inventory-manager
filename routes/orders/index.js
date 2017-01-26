@@ -10,7 +10,7 @@ module.exports = function (router, passport, db) {
 				var order = req.body;
 				order.user = req.user.username;
 
-				db.models.Cases.findOne({ assetTag: order.assetTag }).exec()
+				db.models.Assets.findOne({ assetTag: order.assetTag }).exec()
 					.then(function (asset) {
 						order.productName = asset.name;
 						var orderDetails = new db.models.Orders(order);
@@ -41,7 +41,7 @@ module.exports = function (router, passport, db) {
 						res.send({ message: orderDetails });
 					})
 					.catch(function (err) {
-						res.status(500).send({ error: 'Failed to get order information.' });
+						res.status(400).send({ error: 'Failed to get order information.' });
 					})
 			});
 		}

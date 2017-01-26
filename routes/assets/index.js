@@ -4,7 +4,7 @@ var q = require("q");
 module.exports = function (router, passport, db) {
     return {
         "configureRoutes": function () {
-            var resource = "/assets";
+            var resource = "/asset";
             var assetModel = db.models.Assets;
 
             router.put(resource, passport.authenticate("jwt", { session: false }), function (req, res) {
@@ -55,15 +55,14 @@ module.exports = function (router, passport, db) {
                         res.send({ message: assetDetails });
                     })
                     .catch(function (err) {
-                        res.status(500).send({ error: 'Failed to get asset information.' });
+                        res.status(400).send({ error: 'Failed to get asset information.' });
                     })
             });
 
-            /* Need to Fix asset assignment */
             router.post(resource + "/:assetTag" + "/assign", passport.authenticate("jwt", { session: false }), function (req, res) {
-                db.models.Assets.update({ assetTag: req.params.assetTag }, { $set: { inCase: req.body.caseId } }).exec()
-                    .then(function (userDetails) {
-                        res.status(201).send({ message: 'Product successfully assigned to case.' });
+                db.models.Assets.update({ assetTag: req.params.assetTag }, { $set: { "inCase.status": true, "inCase.case": req.body.caseNumber, "inCase.quantity": req.body.quantity || 1 } }).exec()
+                    .then(function (assetDetails) {
+                        res.status(201).send({ message: assetDetails });
                     })
                     .catch(function (err) {
                         res.status(400).send({ error: 'Failed to assign asset to case.' });

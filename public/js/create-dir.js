@@ -15,55 +15,42 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 
 			function init() {
 				scope.assetTag = "";
+				scope.itemName = "";
 				scope.description = "";
 				scope.type = scope.typeDropdown[0];
-				scope.status = scope.statusOptions[0];
 
 				scope.caseNumber = "";
-				scope.itemName = "";
-				scope.itemPrice = "";
-				scope.itemQuantity = "";
 				scope.itemInCase = "";
 				scope.itemCountInCase = "";
 			}
 
 			scope.createItem = function () {
 				var itemToSave = {
-					location: scope.status,
+					name: scope.itemName,
+					type: scope.type.value,
 					assetTag: scope.assetTag,
-					category: scope.type.value,
 					description: scope.description
 				};
 
-				if (scope.type.value === 'case' || scope.type.value === 'tote') {
-					itemToSave.number = scope.caseNumber;
-
-					inventoryService.createCase(itemToSave)
-						.then(function () {
-							init();
-							toastr.success('Case saved.');
-						})
-						.catch(function () {
-							toastr.error('Failed to save case.');
-						});
+				if (scope.type.value === 'case') {
+					itemToSave.caseNumber = scope.caseNumber;
 				} else {
-					itemToSave.name = scope.itemName;
-					itemToSave.price = scope.itemPrice;
-					itemToSave.quantity = scope.itemQuantity;
-
-					itemToSave.caseId = scope.itemInCase;
-					itemToSave.caseQuantity = scope.itemCountInCase;
-
-					inventoryService.createProduct(itemToSave)
-						.then(function () {
-							init();
-							toastr.success('Case saved.');
-						})
-						.catch(function () {
-							toastr.error('Failed to save case.');
-						});
+					itemToSave.inCase = {
+						case: scope.itemInCase,
+						quantity: scope.itemCountInCase,
+						status: scope.itemInCase ? true : false
+					};
 				}
-			}
+
+				inventoryService.createAsset(itemToSave)
+					.then(function () {
+						init();
+						toastr.success('Case saved.');
+					})
+					.catch(function () {
+						toastr.error('Failed to save case.');
+					});
+			};
 
 			scope.cancel = function () {
 				init();
