@@ -10,7 +10,6 @@
         </ol>
     </section>
 
-    <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
@@ -36,25 +35,23 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <h4>Asset Tag</h4>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <h4>Case Id</h4>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <h4>Description</h4>
-                                    </div>
-                                </div>
-                                <div class="row" ng-repeat="case in cases">
-                                    <div class="col-sm-2">{{case.assetTag}}</div>
-                                    <div class="col-sm-4">{{case.number}}</div>
-                                    <div class="col-sm-2">{{case.description}}</div>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><h4>Asset Tag</h4></th>
+                                        <th><h4>Case Number</h4></th>
+                                        <th><h4>Description</h4></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="case in cases">
+                                        <td>{{case.assetTag}}</td>
+                                        <td>{{case.caseNumber}}</td>
+                                        <td>{{case.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

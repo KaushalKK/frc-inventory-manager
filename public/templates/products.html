@@ -23,33 +23,35 @@
                             <div class="col-sm-6">
                                 <div class="dataTables_length">
                                     <label>Records 
-                                        <select name="product_count" aria-controls="product_count" class="form-control input-sm" ng-options="count.label for count in productCountDropdown" ng-model="productCount">
+                                        <select name="productCount" aria-controls="productCount" class="form-control input-sm" ng-options="count.label for count in productCountDropdown" ng-model="productCount">
                                         </select>
                                     </label>
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div id="product_search" class="dataTables_filter">
+                                <div id="productSearch" class="dataTables_filter">
                                     <label>Search:<input type="search" class="form-control input-sm" placeholder="" ng-model="productSearchTerm"></label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-2"><h4>Asset Tag</h4></div>
-                                    <div class="col-sm-2"><h4>Quantity</h4></div>
-                                    <div class="col-sm-4"><h4>Product</h4></div>
-                                    <div class="col-sm-4"><h4>Description</h4></div>
-                                </div>
-                                <div class="row" ng-repeat="product in products">
-                                    <div class="col-sm-2">{{product.assetTag}}</div>
-                                    <div class="col-sm-2">{{product.quantity}}</div>
-                                    <div class="col-sm-4">{{product.name}}</div>
-                                    <div class="col-sm-4">{{product.description}}</div>
-                                </div>
-                            </div>
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><h4>Asset Tag</h4></th>
+                                        <th><h4>Product</h4></th>
+                                        <th><h4>Description</h4></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="product in products">
+                                        <td>{{product.assetTag}}</td>
+                                        <td>{{product.name}}</td>
+                                        <td>{{product.description}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

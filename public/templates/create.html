@@ -25,11 +25,10 @@
                                 </div>
                             </div>
 
-                            <!-- Asset Type -->
                             <div class="form-group">
-                                <label for="typeDropdown" class="col-md-3 control-label">Type</label>
+                                <label for="itemName" class="col-md-3 control-label">Name</label>
                                 <div class="col-md-7 col-sm-12">
-                                    <select class="form-control" ng-model="type" ng-options="type.name for type in typeDropdown"></select>
+                                    <input class="form-control" type="text" name="itemName" id="itemName" ng-model="itemName">
                                 </div>
                             </div>
 
@@ -40,12 +39,11 @@
                                 </div>
                             </div>
 
+                            <!-- Asset Type -->
                             <div class="form-group">
-                                <label for="status" class="col-md-3 control-label">Status</label>
+                                <label for="typeDropdown" class="col-md-3 control-label">Type</label>
                                 <div class="col-md-7 col-sm-12">
-                                    <button type="button" class="btn btn-block btn-flat" ng-click="toggle()" ng-class="{'btn-info': status === 'Storage', 'btn-warning': status === 'At Event'}">
-                                        {{status}}
-                                    </button>
+                                    <select class="form-control" ng-model="type" ng-options="type.name for type in typeDropdown"></select>
                                 </div>
                             </div>
 
@@ -61,28 +59,7 @@
                             <!-- Asset Name -->
                             <div ng-show="type.value === 'product'">
                                 <div class="form-group">
-                                    <label for="itemName" class="col-md-3 control-label">Name</label>
-                                    <div class="col-md-7 col-sm-12">
-                                        <input class="form-control" type="text" name="itemName" id="itemName" ng-model="itemName">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="itemPrice" class="col-md-3 control-label">Price</label>
-                                    <div class="col-md-7 col-sm-12">
-                                        <input class="form-control" type="text" name="itemPrice" id="itemPrice" ng-model="itemPrice">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="itemQuantity" class="col-md-3 control-label">Quantity</label>
-                                    <div class="col-md-7 col-sm-12">
-                                        <input class="form-control" type="text" name="itemQuantity" id="itemQuantity" ng-model="itemQuantity">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="itemInCase" class="col-md-3 control-label">In Case</label>
+                                    <label for="itemInCase" class="col-md-3 control-label">In Case Number</label>
                                     <div class="col-md-7 col-sm-12">
                                         <input class="form-control" type="text" name="itemInCase" id="itemInCase" ng-model="itemInCase">
                                     </div>
