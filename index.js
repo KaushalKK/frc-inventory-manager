@@ -1,27 +1,27 @@
 "use strict";
 
 //libs
-var http = require('http');
-var morgan = require('morgan');
-var express = require('express');
-var bodyParser = require('body-parser');
+let http = require('http');
+let morgan = require('morgan');
+let express = require('express');
+let bodyParser = require('body-parser');
 
-var fs = require('fs');
-var passport = require('passport');
-var JwtStrategy = require('passport-jwt').Strategy;
-var ExtractJwt = require('passport-jwt').ExtractJwt;
+let fs = require('fs');
+let passport = require('passport');
+let JwtStrategy = require('passport-jwt').Strategy;
+let ExtractJwt = require('passport-jwt').ExtractJwt;
 
-var config = require('./config.js')();
-var routes = require('./routes/index')(config);
+let config = require('./config.js')();
+let routes = require('./routes/index')(config);
 
 //server config
-var app = express();
+let app = express();
 app.set('port', process.env.PORT || 8080);
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -30,18 +30,18 @@ app.use(function (req, res, next) {
 //set up passport
 app.use(passport.initialize());
 
-var opts = {};
+let opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeader();
 opts.secretOrKey = fs.readFileSync('keys/rsakey.pem');
 opts.issuer = "canfrc";
 
-passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
+passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     done(null, jwt_payload);
 }));
 
 app.use('/', routes);
 app.use(express.static('public'));
 
-http.createServer(app).listen(app.get('port'), function () {
+http.createServer(app).listen(app.get('port'), () => {
     console.log('FRC Inventory server listening on port ' + app.get('port'));
 });

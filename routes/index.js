@@ -1,9 +1,9 @@
 "use strict";
 
-var express = require('express');
-var passport = require('passport');
+let express = require('express');
+let passport = require('passport');
 
-module.exports = function (config) {
+module.exports = (config) => {
     var router = express.Router();
     var db = require('../db/index.js')(config.dbConfig);
 

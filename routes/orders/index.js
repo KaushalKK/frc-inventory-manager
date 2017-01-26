@@ -1,25 +1,27 @@
 "use strict";
 
-module.exports = function (router, passport, db) {
+module.exports = (router, passport, db) => {
 	return {
-		"configureRoutes": function () {
-			var resource = "/order";
+		"configureRoutes": () => {
+			let resource = "/order";
+			let model = db.models.Orders;
+			let assetModel = db.models.Assets;
 
-			router.put(resource, passport.authenticate("jwt", { session: false }), function (req, res) {
+			router.put(resource, passport.authenticate("jwt", { session: false }), (req, res) => {
 				var order = req.body;
 				order.user = req.user.username;
 
-				db.models.Assets.findOne({ assetTag: order.assetTag }).exec()
-					.then(function (asset) {
+				assetModel.findOne({ assetTag: order.assetTag }).exec()
+					.then((asset) => {
 						order.productName = asset.name;
-						var orderDetails = new db.models.Orders(order);
+						var orderDetails = new model(order);
 
 						return orderDetails.save(orderDetails);
 					})
-					.then(function (createdOrderDetails) {
+					.then((createdOrderDetails) => {
 						res.status(201).send({ message: createdOrderDetails });
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.status(400).send({
 							error: 'Failed to create order.',
 							details: err.toString()
@@ -27,12 +29,12 @@ module.exports = function (router, passport, db) {
 					});
 			});
 
-			router.get(resource + "s", passport.authenticate("jwt", { session: false }), function (req, res) {
-				db.models.Orders.find({}).exec()
-					.then(function (allOrders) {
+			router.get(resource + "s", passport.authenticate("jwt", { session: false }), (req, res) => {
+				model.find({}).exec()
+					.then((allOrders) => {
 						res.send({ message: allOrders });
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.status(400).send({
 							error: 'Failed to get orders.',
 							details: err.toString()
@@ -40,12 +42,12 @@ module.exports = function (router, passport, db) {
 					});
 			});
 
-			router.get(resource + "/:orderId", passport.authenticate("jwt", { session: false }), function (req, res) {
-				db.models.Orders.findOne({ barcode: req.params.orderId }).exec()
-					.then(function (orderDetails) {
+			router.get(resource + "/:orderId", passport.authenticate("jwt", { session: false }), (req, res) => {
+				model.findOne({ barcode: req.params.orderId }).exec()
+					.then((orderDetails) => {
 						res.send({ message: orderDetails });
 					})
-					.catch(function (err) {
+					.catch((err) => {
 						res.status(400).send({
 							error: 'Failed to get order information.',
 							details: err.toString()
