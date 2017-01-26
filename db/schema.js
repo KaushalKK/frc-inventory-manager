@@ -37,7 +37,10 @@ module.exports = function (mongoose) {
         inCase: {
             status: Boolean,
             case: Number,
-            quantity: Number
+            quantity: {
+                type: Number,
+                default: 1
+            }
         }
     },
     {
