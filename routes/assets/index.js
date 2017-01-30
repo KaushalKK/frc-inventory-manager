@@ -81,6 +81,19 @@ module.exports = (router, passport, db) => {
                     });
             });
 
+            router.post(resource + "/:assetTag", passport.authenticate("jwt", { session: false }), (req, res) => {
+                assetModel.update({ assetTag: req.params.assetTag }, req.body).exec()
+                    .then((assetDetails) => {
+                        res.status(200).send({ message: assetDetails });
+                    })
+                    .catch((err) => {
+                        res.status(400).send({
+                            error: 'Failed to update asset.',
+                            details: err.toString()
+                        });
+                    });
+            });
+
             router.post(resource + "/:assetTag" + "/assign", passport.authenticate("jwt", { session: false }), (req, res) => {
                 assetModel.update({ assetTag: req.params.assetTag }, { $set: { "inCase.status": true, "inCase.case": req.body.caseNumber, "inCase.quantity": req.body.quantity || 1 } }).exec()
                     .then((assetDetails) => {
