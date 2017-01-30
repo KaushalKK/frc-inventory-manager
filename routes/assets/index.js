@@ -5,6 +5,7 @@ module.exports = (router, passport, db) => {
         "configureRoutes": () => {
             let resource = "/asset";
             let assetModel = db.models.Assets;
+            let orderModel = db.models.Orders;
 
             router.put(resource, passport.authenticate("jwt", { session: false }), (req, res) => {
                 var assetDetails = new assetModel(req.body);
@@ -66,10 +67,10 @@ module.exports = (router, passport, db) => {
                 assetModel.findOne({ assetTag: req.params.assetTag }).exec()
                     .then((assetDetails) => {
                         assetResponse.details = assetDetails;
-                        return assetDetails.type === 'case' ? assetModel.find({ 'inCase.case': assetDetails.caseNumber }).exec() : "";
+                        return assetDetails.type !== 'product' ? assetModel.find({ 'inCase.case': assetDetails.caseNumber }).exec() : orderModel.find({ assetTag: req.params.assetTag }).exec();
                     })
-                    .then(function(productsInCase) {
-                        assetResponse.associatedAssets = productsInCase;
+                    .then(function (productsOrOrders) {
+                        assetResponse.associatedContent = productsOrOrders;
                         res.send({ message: assetResponse });
                     })
                     .catch((err) => {

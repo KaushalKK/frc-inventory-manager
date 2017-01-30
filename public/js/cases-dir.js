@@ -32,7 +32,7 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                             windowClass: 'modal',
                             controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                 $scope.details = asset.details;
-                                $scope.productsInCase = asset.associatedAssets || [];
+                                $scope.productsInCase = asset.associatedContent || [];
 
                                 $scope.closeDetailsModal = function() {
                                     $uibModalInstance.close();
