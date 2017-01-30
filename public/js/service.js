@@ -39,21 +39,21 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
         }));
     };
 
-    /* Cases */
-    this.getAllCases = function () {
+    this.getAssetByTag = function (assetTag) {
         return promiseWrap($http({
             method: 'GET',
-            url: '/asset/cases',
+            url: '/asset/' + assetTag,
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }
         }));
     };
 
-    this.getCaseByNumber = function (caseNumber) {
+    /* Cases */
+    this.getAllCases = function () {
         return promiseWrap($http({
             method: 'GET',
-            url: '/asset/case/' + caseNumber,
+            url: '/asset/cases',
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }

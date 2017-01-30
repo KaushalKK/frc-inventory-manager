@@ -1,0 +1,45 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Case {{details.caseNumber}} Details</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <label>Asset Tag:</label> {{details.assetTag}}
+            </div>
+            <div class="col-sm-offset-2 col-sm-3">
+                <label>Case #:</label> {{details.caseNumber}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <label>Name:</label> {{details.name}}
+            </div>
+            <div class="col-sm-7">
+                <label>Description:</label> {{details.description}}
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th><h4>Asset Tag</h4></th>
+                        <th><h4>Product</h4></th>
+                        <th><h4>Description</h4></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in productsInCase">
+                        <td>{{product.assetTag}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="closeDetailsModal()">Close</button>
+    </div>
+</div>

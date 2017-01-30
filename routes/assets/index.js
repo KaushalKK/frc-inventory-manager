@@ -61,9 +61,16 @@ module.exports = (router, passport, db) => {
             });
 
             router.get(resource + "/:assetTag", passport.authenticate("jwt", { session: false }), (req, res) => {
+                let assetResponse = {};
+
                 assetModel.findOne({ assetTag: req.params.assetTag }).exec()
                     .then((assetDetails) => {
-                        res.send({ message: assetDetails });
+                        assetResponse.details = assetDetails;
+                        return assetDetails.type === 'case' ? assetModel.find({ 'inCase.case': assetDetails.caseNumber }).exec() : "";
+                    })
+                    .then(function(productsInCase) {
+                        assetResponse.associatedAssets = productsInCase;
+                        res.send({ message: assetResponse });
                     })
                     .catch((err) => {
                         res.status(400).send({

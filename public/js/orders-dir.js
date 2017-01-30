@@ -26,7 +26,7 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
             scope.changeStatus = function (statusType) {
                 $uibModal.open({
                     templateUrl: '../templates/' + statusType + '.html',
-                    size: 'large',
+                    size: 'lg',
                     windowClass: 'modal',
                     controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                         $scope.districtEvents = [
