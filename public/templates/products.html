@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-condensed table-striped">
+                            <table class="table table-condensed table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th><h4>Asset Tag</h4></th>
@@ -45,7 +45,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="product in products">
+                                    <tr ng-repeat="product in products" ng-click="getProductDetails(product.assetTag)">
                                         <td>{{product.assetTag}}</td>
                                         <td>{{product.name}}</td>
                                         <td>{{product.description}}</td>

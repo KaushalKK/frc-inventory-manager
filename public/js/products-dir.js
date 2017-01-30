@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('inventorySystem').directive('products', ['inventoryService', 'toastr', function (inventoryService, toastr) {
+angular.module('inventorySystem').directive('products', ['$uibModal', 'inventoryService', 'toastr', function ($uibModal, inventoryService, toastr) {
     return {
         restrict: 'AE',
         templateUrl: '../templates/products.html',
@@ -21,6 +21,39 @@ angular.module('inventorySystem').directive('products', ['inventoryService', 'to
                         scope.products = [];
                         toastr.error('Failed to get Products');
                     });
+            };
+
+            scope.getProductDetails = function (assetTag) {
+                inventoryService.getAssetByTag(assetTag)
+                    .then(function (asset) {
+                        $uibModal.open({
+                            templateUrl: '../templates/product-details.html',
+                            size: 'lg',
+                            windowClass: 'modal',
+                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                                $scope.details = asset.details;
+                                $scope.productOrders = asset.associatedContent || [];
+
+                                $scope.closeDetailsModal = function() {
+                                    $uibModalInstance.close();
+                                };
+
+                                $uibModalInstance.result.then(function () {
+                                    setTimeout(function () {
+                                        scope.getProducts();
+                                    }, 400);
+                                }, function () {
+                                    setTimeout(function () {
+                                        scope.getProducts();
+                                    }, 400);
+                                });
+                            }]
+                        });
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                        toastr.error('Failed to get case details.');
+                    })
             };
 
             function init() {
