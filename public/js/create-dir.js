@@ -54,7 +54,7 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 
 			scope.cancel = function () {
 				init();
-			}
+			};
 
 			scope.toggle = function () {
 				if (scope.status === scope.statusOptions[0]) {
@@ -62,7 +62,7 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 				} else {
 					scope.status = scope.statusOptions[0];
 				}
-			}
+			};
 
 			init();
 		}

@@ -53,7 +53,7 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                     .catch(function (err) {
                         console.log(err);
                         toastr.error('Failed to get case details.');
-                    })
+                    });
             };
 
             function init() {
@@ -65,5 +65,5 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
 
             init();
         }
-    }
+    };
 }]);

@@ -89,5 +89,5 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
 
             init();
         }
-    }
+    };
 }]);
