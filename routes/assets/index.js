@@ -82,7 +82,7 @@ module.exports = (router, passport, db) => {
             });
 
             router.post(resource + "/:assetTag", passport.authenticate("jwt", { session: false }), (req, res) => {
-                assetModel.update({ assetTag: req.params.assetTag }, req.body).exec()
+                assetModel.findOneAndUpdate({ assetTag: req.params.assetTag }, req.body).exec()
                     .then((assetDetails) => {
                         res.status(200).send({ message: assetDetails });
                     })
