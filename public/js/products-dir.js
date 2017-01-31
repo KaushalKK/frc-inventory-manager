@@ -31,11 +31,35 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                             size: 'lg',
                             windowClass: 'modal',
                             controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                                $scope.edit = false;
                                 $scope.details = asset.details;
                                 $scope.productOrders = asset.associatedContent || [];
 
-                                $scope.closeDetailsModal = function() {
+                                $scope.closeDetailsModal = function () {
                                     $uibModalInstance.close();
+                                };
+
+                                $scope.saveChanges = function () {
+                                    var assetDetails = {
+                                        assetTag: assetTag,
+                                        name: $scope.details.name,
+                                        description: $scope.details.description,
+                                        inCase: {
+                                            case: $scope.details.inCase.case,
+                                            quantity: $scope.details.inCase.quantity,
+                                            status: $scope.details.inCase.case ? true : false
+                                        }
+                                    };
+
+                                    inventoryService.editAsset(assetTag, assetDetails)
+                                        .then(function () {
+                                            $scope.edit = false;
+                                        })
+                                        .catch(function () {
+                                            toastr.warning('Product Edit Failed', {
+                                                timeOut: 500
+                                            });
+                                        });
                                 };
 
                                 $uibModalInstance.result.then(function () {

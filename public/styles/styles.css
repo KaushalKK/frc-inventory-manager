@@ -37,3 +37,12 @@
     content: "\f00c";
     padding-right: 5px;
 }
+
+.edit-icon:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    content: "\f040";
+    padding-right: 5px;
+}

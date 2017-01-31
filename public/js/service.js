@@ -39,6 +39,18 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
         }));
     };
 
+    this.editAsset = function (assetTag, assetDetails) {
+        return promiseWrap($http({
+            method: 'POST',
+            url: '/asset/' + assetTag,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'JWT ' + $cookies.get('token')
+            },
+            data: assetDetails
+        }));
+    };
+
     this.getAssetByTag = function (assetTag) {
         return promiseWrap($http({
             method: 'GET',
