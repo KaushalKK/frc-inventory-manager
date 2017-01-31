@@ -10,13 +10,19 @@
             <div class="col-sm-offset-2 col-sm-3">
                 <label>Case #:</label> {{details.caseNumber}}
             </div>
+            <div class="col-sm-1 pull-right">
+                <button type="button" class="btn btn-xs btn-warning edit-icon" ng-hide="edit" ng-click="edit = !edit">Edit</button>
+                <button type="button" class="btn btn-xs btn-success save-icon" ng-show="edit" ng-click="saveChanges()">Save</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-5">
-                <label>Name:</label> {{details.name}}
+                <div ng-if="!edit"><label>Name:</label> {{details.name}}</div>
+                <div ng-if="edit"><label>Name:</label> <input class="form-input" type="text" ng-model="details.name"/></div>
             </div>
             <div class="col-sm-7">
-                <label>Description:</label> {{details.description}}
+                <div ng-if="!edit"><label>Description:</label> {{details.description}}</div>
+                <div ng-if="edit"><label>Description:</label> <textarea class="form-input" row="4" ng-model="details.description"/></div>
             </div>
         </div>
 

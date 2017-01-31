@@ -31,11 +31,32 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                             size: 'lg',
                             windowClass: 'modal',
                             controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                                $scope.edit = false;
                                 $scope.details = asset.details;
                                 $scope.productsInCase = asset.associatedContent || [];
 
-                                $scope.closeDetailsModal = function() {
+                                $scope.closeDetailsModal = function () {
                                     $uibModalInstance.close();
+                                };
+
+                                $scope.saveChanges = function () {
+                                    var assetDetails = {
+                                        type: asset.type,
+                                        assetTag: assetTag,
+                                        name: $scope.details.name,
+                                        caseNumber: asset.caseNumber,
+                                        description: $scope.details.description
+                                    };
+
+                                    inventoryService.editAsset(assetTag, assetDetails)
+                                        .then(function () {
+                                            $scope.edit = false;
+                                        })
+                                        .catch(function () {
+                                            toastr.warning((asset.type === 'case' ? 'Case' : 'Tote') + ' Edit Failed', {
+                                                timeOut: 500
+                                            });
+                                        });
                                 };
 
                                 $uibModalInstance.result.then(function () {

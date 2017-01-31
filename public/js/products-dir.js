@@ -41,6 +41,7 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
 
                                 $scope.saveChanges = function () {
                                     var assetDetails = {
+                                        type: 'product',
                                         assetTag: assetTag,
                                         name: $scope.details.name,
                                         description: $scope.details.description,
