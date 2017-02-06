@@ -2,6 +2,30 @@
     padding: 8px 5px;
 }
 
+.dataTables_filter {
+    text-align: right;
+    padding-top: 15px;
+}
+
+.pagination {
+    margin: 0;
+}
+
+.pagination-width {
+    width: 75px;
+    text-align: center;
+}
+
+.disabled.page-counter {
+    color: #333;
+}
+
+.disabled.page-counter:hover {
+    cursor: default;
+    background: none;
+    border-color: #ddd;
+}
+
 .logout-icon:before {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;

@@ -15,26 +15,19 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Case List</h3>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3>Case List</h3>
+                            </div>
+                            <div class="col-sm-4">
+                                <!--<div id="caseSearch" class="dataTables_filter">
+                                    <label>Search:<input type="search" class="form-control input" ng-model="caseSearchTerm"></label>
+                                </div>-->
+                            </div>
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="dataTables_length">
-                                    <label>Records 
-                                        <select name="caseCount" aria-controls="caseCount" class="form-control input-sm" ng-options="count.label for count in caseCountDropdown" ng-model="caseCount">
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div id="caseSearch" class="dataTables_filter">
-                                    <label>Search:<input type="search" class="form-control input-sm" ng-model="caseSearchTerm"></label>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="table-responsive">
                             <table class="table table-condensed table-striped table-hover">
                                 <thead>
@@ -52,6 +45,14 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <ul uib-pagination total-items="pagination.total" ng-model="pagination.page" max-size="pagination.size" class="pagination" ng-change="getPage()" num-pages="pagination.totalPages" template-url="/templates/pagination.html"></ul>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>Total Cases: {{pagination.total}}</h5>
+                            </div>
                         </div>
                     </div>
                 </div>

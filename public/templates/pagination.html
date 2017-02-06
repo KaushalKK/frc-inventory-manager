@@ -1,0 +1,9 @@
+<li ng-if="directionLinks" ng-class="{disabled: noPrevious()||ngDisabled}" class="pagination-prev">
+    <a href class="pagination-width" ng-click="selectPage(page - 1, $event)" ng-disabled="noPrevious()||ngDisabled" uib-tabindex-toggle>Previous</a>
+</li>
+<li class="pagination-page">  
+    <span class="disabled page-counter pagination-width">{{page}} of {{totalPages}}</span>
+</li>
+<li ng-if="directionLinks" ng-class="{disabled: noNext()||ngDisabled}" class="pagination-next">
+    <a href class="pagination-width" ng-click="selectPage(page + 1, $event)" ng-disabled="noNext()||ngDisabled" uib-tabindex-toggle>Next</a>
+</li>
