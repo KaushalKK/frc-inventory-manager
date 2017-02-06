@@ -3,9 +3,10 @@
 module.exports = (router, passport, db) => {
 	return {
 		"configureRoutes": () => {
+			let pageLimit = 10;
 			let resource = "/order";
-			let model = db.models.Orders;
 			let assetModel = db.models.Assets;
+			let orderModel = db.models.Orders;
 
 			router.put(resource, passport.authenticate("jwt", { session: false }), (req, res) => {
 				var order = req.body;
@@ -14,7 +15,7 @@ module.exports = (router, passport, db) => {
 				assetModel.findOne({ assetTag: order.assetTag }).exec()
 					.then((asset) => {
 						order.productName = asset.name;
-						var orderDetails = new model(order);
+						var orderDetails = new orderModel(order);
 
 						return orderDetails.save(orderDetails);
 					})
@@ -30,9 +31,34 @@ module.exports = (router, passport, db) => {
 			});
 
 			router.get(resource + "s", passport.authenticate("jwt", { session: false }), (req, res) => {
-				model.find({}).exec()
+				let resp = {
+					data: [],
+					first: {},
+					last: {},
+					count: 0
+				};
+
+				let page = req.query.page,
+					offset = req.query.offset;
+
+				let condition = { };
+
+				if (page === 'next') {
+					condition.updatedAt = { $lt: offset };
+				} else if (page === 'prev') {
+					condition.updatedAt = { $gt: offset };
+				}
+
+				orderModel.find({}).count().exec()
+					.then((orderCount) => {
+						resp.count = orderCount;
+						return orderModel.find(condition).sort({ updatedAt: -1 }).limit(pageLimit).exec();
+					})
 					.then((allOrders) => {
-						res.send({ message: allOrders });
+						resp.data = allOrders;
+                        resp.first = allOrders[0];
+                        resp.last = allOrders[allOrders.length - 1];
+						res.send({ message: resp });
 					})
 					.catch((err) => {
 						res.status(400).send({

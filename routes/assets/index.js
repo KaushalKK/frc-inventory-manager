@@ -43,7 +43,7 @@ module.exports = (router, passport, db) => {
                 }
 
                 assetModel.count().exec()
-                    .then(function (assetCount) {
+                    .then((assetCount) => {
                         resp.count = assetCount;
                         return assetModel.find(condition).limit(pageLimit).exec();
                     })
@@ -81,7 +81,7 @@ module.exports = (router, passport, db) => {
                 }
 
                 assetModel.find({ $or: [{ type: 'case' }, { type: 'tote' }] }).count().exec()
-                    .then(function (assetCount) {
+                    .then((assetCount) => {
                         resp.count = assetCount;
                         return assetModel.find(condition).sort({ updatedAt: -1 }).limit(pageLimit).exec();
                     })
@@ -119,7 +119,7 @@ module.exports = (router, passport, db) => {
                 }
 
                 assetModel.find({ type: 'product' }).count().exec()
-                    .then(function (assetCount) {
+                    .then((assetCount) => {
                         resp.count = assetCount;
                         return assetModel.find(condition).sort({ updatedAt: -1 }).limit(pageLimit).exec();
                     })
@@ -145,7 +145,7 @@ module.exports = (router, passport, db) => {
                         assetResponse.details = assetDetails;
                         return assetDetails.type !== 'product' ? assetModel.find({ 'inCase.case': assetDetails.caseNumber }).exec() : orderModel.find({ assetTag: req.params.assetTag }).exec();
                     })
-                    .then(function (productsOrOrders) {
+                    .then((productsOrOrders) => {
                         assetResponse.associatedContent = productsOrOrders;
                         res.send({ message: assetResponse });
                     })
