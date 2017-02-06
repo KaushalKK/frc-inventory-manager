@@ -41,19 +41,6 @@ module.exports = (router, passport, db) => {
 						});
 					});
 			});
-
-			router.get(resource + "/:orderId", passport.authenticate("jwt", { session: false }), (req, res) => {
-				model.findOne({ barcode: req.params.orderId }).exec()
-					.then((orderDetails) => {
-						res.send({ message: orderDetails });
-					})
-					.catch((err) => {
-						res.status(400).send({
-							error: 'Failed to get order information.',
-							details: err.toString()
-						});
-					});
-			});
 		}
 	};
 };

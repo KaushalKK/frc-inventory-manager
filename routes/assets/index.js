@@ -3,6 +3,7 @@
 module.exports = (router, passport, db) => {
     return {
         "configureRoutes": () => {
+            let pageLimit = 10;
             let resource = "/asset";
             let assetModel = db.models.Assets;
             let orderModel = db.models.Orders;
@@ -23,9 +24,34 @@ module.exports = (router, passport, db) => {
             });
 
             router.get(resource + "s", passport.authenticate("jwt", { session: false }), (req, res) => {
-                assetModel.find({}).exec()
+                let resp = {
+                    data: [],
+                    first: {},
+                    last: {},
+                    count: 0
+                };
+
+                let page = req.query.page,
+                    offset = req.query.offset;
+
+                let condition = {};
+
+                if (page === 'next') {
+                    condition.updatedAt = { $lt: offset };
+                } else if (page === 'prev') {
+                    condition.updatedAt = { $gt: offset };
+                }
+
+                assetModel.count().exec()
+                    .then(function (assetCount) {
+                        resp.count = assetCount;
+                        return assetModel.find(condition).limit(pageLimit).exec();
+                    })
                     .then((allAssets) => {
-                        res.send({ message: allAssets });
+                        resp.data = allAssets;
+                        resp.first = allAssets[0];
+                        resp.last = allAssets[allAssets.length - 1];
+                        res.send({ message: resp });
                     })
                     .catch((err) => {
                         res.status(400).send({
@@ -36,9 +62,34 @@ module.exports = (router, passport, db) => {
             });
 
             router.get(resource + "/cases", passport.authenticate("jwt", { session: false }), (req, res) => {
-                assetModel.find({ $or: [{ type: 'case' }, { type: 'tote' }] }).exec()
+                let resp = {
+                    data: [],
+                    first: {},
+                    last: {},
+                    count: 0
+                };
+
+                let page = req.query.page,
+                    offset = req.query.offset;
+
+                let condition = { $or: [{ type: 'case' }, { type: 'tote' }] };
+
+                if (page === 'next') {
+                    condition.updatedAt = { $lt: offset };
+                } else if (page === 'prev') {
+                    condition.updatedAt = { $gt: offset };
+                }
+
+                assetModel.find({ $or: [{ type: 'case' }, { type: 'tote' }] }).count().exec()
+                    .then(function (assetCount) {
+                        resp.count = assetCount;
+                        return assetModel.find(condition).sort({ updatedAt: -1 }).limit(pageLimit).exec();
+                    })
                     .then((allCasesAndTotes) => {
-                        res.send({ message: allCasesAndTotes });
+                        resp.data = allCasesAndTotes;
+                        resp.first = allCasesAndTotes[0];
+                        resp.last = allCasesAndTotes[allCasesAndTotes.length - 1];
+                        res.send({ message: resp });
                     })
                     .catch((err) => {
                         res.status(400).send({
@@ -49,9 +100,34 @@ module.exports = (router, passport, db) => {
             });
 
             router.get(resource + "/products", passport.authenticate("jwt", { session: false }), (req, res) => {
-                assetModel.find({ type: 'product' }).exec()
+                let resp = {
+                    data: [],
+                    first: {},
+                    last: {},
+                    count: 0
+                };
+
+                let page = req.query.page,
+                    offset = req.query.offset;
+
+                let condition = { type: 'product' };
+
+                if (page === 'next') {
+                    condition.updatedAt = { $lt: offset };
+                } else if (page === 'prev') {
+                    condition.updatedAt = { $gt: offset };
+                }
+
+                assetModel.find({ type: 'product' }).count().exec()
+                    .then(function (assetCount) {
+                        resp.count = assetCount;
+                        return assetModel.find(condition).sort({ updatedAt: -1 }).limit(pageLimit).exec();
+                    })
                     .then((allProducts) => {
-                        res.send({ message: allProducts });
+                        resp.data = allProducts;
+                        resp.first = allProducts[0];
+                        resp.last = allProducts[allProducts.length - 1];
+                        res.send({ message: resp });
                     })
                     .catch((err) => {
                         res.status(400).send({
