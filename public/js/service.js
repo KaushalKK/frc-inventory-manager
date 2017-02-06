@@ -62,10 +62,17 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
     };
 
     /* Cases */
-    this.getAllCases = function () {
+    this.getAllCases = function (direction, updateAt) {
+        var queryParams = {};
+        if (direction !== null && updateAt !== null) {
+            queryParams.page = direction;
+            queryParams.offset = updateAt;
+        }
+
         return promiseWrap($http({
             method: 'GET',
             url: '/asset/cases',
+            params: queryParams,
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }

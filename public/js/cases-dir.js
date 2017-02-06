@@ -6,16 +6,40 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
         templateUrl: '../templates/cases.html',
         replace: true,
         link: function (scope) {
-            scope.caseCountDropdown = [
-                { label: '10', value: '10' },
-                { label: '25', value: '25' }
-            ];
+            var last = null,
+                first = null;
+
+            scope.pagination = {
+                page: 1,
+                size: 0,
+                total: 0,
+                prevPage: 1,
+                totalPages: 0
+            };
             scope.cases = [];
 
             scope.getCases = function () {
-                inventoryService.getAllCases()
-                    .then(function (data) {
-                        scope.cases = data;
+                inventoryService.getAllCases(null, null)
+                    .then(function (caseResponse) {
+                        scope.cases = caseResponse.data;
+                        scope.pagination.total = caseResponse.count;
+                        last = caseResponse.last.updatedAt;
+                        first = caseResponse.first.updatedAt;
+                    })
+                    .catch(function () {
+                        scope.cases = [];
+                        toastr.error('Failed to get Cases');
+                    });
+            };
+
+            scope.getPage = function () {
+                var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false;
+                inventoryService.getAllCases(nextPage ? 'next' : 'prev', nextPage ? last : first)
+                    .then(function (caseResponse) {
+                        scope.cases = caseResponse.data;
+                        last = caseResponse.last.updatedAt;
+                        first = caseResponse.first.updatedAt;
+                        scope.pagination.prevPage = scope.pagination.page;
                     })
                     .catch(function () {
                         scope.cases = [];
@@ -78,7 +102,6 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
             };
 
             function init() {
-                scope.caseCount = scope.caseCountDropdown[0];
                 scope.search = '';
 
                 scope.getCases();
