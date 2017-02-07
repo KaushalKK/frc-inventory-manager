@@ -2,7 +2,7 @@
     <section class="content-header">
         <h1>
             Create
-            <small>New Cases & Products</small>
+            <small>New Cases &amp; Products</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
@@ -12,11 +12,17 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <form id="create-form" class="form-horizontal" autocomplete="off" role="form" enctype="multipart/form-data">
-                    <div class="box box-default">
-                        <div class="box-body">
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12 btn-group">
+                        <button type="button" class="btn btn-sm btn-primary" ng-model="assetCopy" uib-btn-radio="false">Single Item</button>
+                        <button type="button" class="btn btn-sm btn-primary" ng-model="assetCopy" uib-btn-radio="true">Multiple Items</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <form id="create-form" class="form-horizontal" autocomplete="off" role="form" enctype="multipart/form-data">
                             <!-- Asset Tag -->
                             <div class="form-group ">
                                 <label for="assetTag" class="col-md-3 control-label">Asset Tag</label>
@@ -72,16 +78,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- /.box-body -->
-                        <div class="box-footer text-right">
-                            <a class="btn btn-link" ng-click="cancel()">Cancel</a>
-                            <button type="submit" class="btn btn-success save-icon" id="submit-button" ng-click="createItem()">Save</button>
-                        </div>
-                        <!-- /.box-footer -->
+                        </form>
                     </div>
-                    <!-- /.box -->
-                </form>
+                </div>
+            </div>
+            <div class="box-footer text-right">
+                <a class="btn btn-link" ng-click="cancel()">Cancel</a>
+                <button type="submit" class="btn btn-success save-icon" id="submit-button" ng-click="createItem()">Save</button>
             </div>
         </div>
     </section>

@@ -11,7 +11,7 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 				{ name: "Produt", value: "product" },
 				{ name: "Tote / Bin", value: "tote" }
 			];
-			scope.statusOptions = ["Storage", "At Event"];
+			scope.assetCopy = false;
 
 			function init() {
 				scope.assetTag = "";
@@ -44,7 +44,12 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 
 				inventoryService.createAsset(itemToSave)
 					.then(function () {
-						init();
+						if (scope.assetCopy) {
+							scope.assetTag = "";
+						} else {
+							init();
+						}
+
 						toastr.success('Case saved.');
 					})
 					.catch(function () {
@@ -54,14 +59,6 @@ angular.module('inventorySystem').directive('create', ['inventoryService', 'toas
 
 			scope.cancel = function () {
 				init();
-			};
-
-			scope.toggle = function () {
-				if (scope.status === scope.statusOptions[0]) {
-					scope.status = scope.statusOptions[1];
-				} else {
-					scope.status = scope.statusOptions[0];
-				}
 			};
 
 			init();
