@@ -80,7 +80,13 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
     };
 
     /* Products */
-    this.getAllProducts = function () {
+    this.getAllProducts = function (direction, updateAt) {
+        var queryParams = {};
+        if (direction !== null && updateAt !== null) {
+            queryParams.page = direction;
+            queryParams.offset = updateAt;
+        }
+
         return promiseWrap($http({
             method: 'GET',
             url: '/asset/products',
@@ -118,7 +124,13 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
         }));
     };
 
-    this.getAllOrders = function () {
+    this.getAllOrders = function (direction, updateAt) {
+        var queryParams = {};
+        if (direction !== null && updateAt !== null) {
+            queryParams.page = direction;
+            queryParams.offset = updateAt;
+        }
+
         return promiseWrap($http({
             method: 'GET',
             url: '/orders',

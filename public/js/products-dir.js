@@ -6,16 +6,40 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
         templateUrl: '../templates/products.html',
         replace: true,
         link: function (scope) {
-            scope.productCountDropdown = [
-                { label: '10', value: '10' },
-                { label: '25', value: '25' }
-            ];
+            var last = null,
+                first = null;
+
+            scope.pagination = {
+                page: 1,
+                size: 0,
+                total: 0,
+                prevPage: 1,
+                totalPages: 0
+            };
             scope.products = [];
 
             scope.getProducts = function () {
-                inventoryService.getAllProducts()
-                    .then(function (data) {
-                        scope.products = data;
+                inventoryService.getAllProducts(null, null)
+                    .then(function (response) {
+                        scope.products = response.data;
+                        scope.pagination.total = response.count;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
+                    })
+                    .catch(function () {
+                        scope.products = [];
+                        toastr.error('Failed to get Products');
+                    });
+            };
+
+            scope.getPage = function () {
+                var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false;
+                inventoryService.getAllProducts(nextPage ? 'next' : 'prev', nextPage ? last : first)
+                    .then(function (response) {
+                        scope.products = response.data;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
+                        scope.pagination.prevPage = scope.pagination.page;
                     })
                     .catch(function () {
                         scope.products = [];
@@ -75,26 +99,13 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                             }]
                         });
                     })
-                    .catch(function (err) {
-                        console.log(err);
+                    .catch(function () {
                         toastr.error('Failed to get case details.');
                     });
             };
 
             function init() {
-                scope.productCount = scope.productCountDropdown[0];
                 scope.search = '';
-
-                scope.status = '';
-                scope.productId = '';
-                scope.productCost = '';
-                scope.productName = '';
-                scope.productQuantity = 0;
-                scope.productCategory = '';
-                scope.productDescription = '';
-
-                scope.caseId = '';
-                scope.productsInCase = 0;
 
                 scope.getProducts();
             }
