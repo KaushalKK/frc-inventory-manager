@@ -20,11 +20,11 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
 
             scope.getCases = function () {
                 inventoryService.getAllCases(null, null)
-                    .then(function (caseResponse) {
-                        scope.cases = caseResponse.data;
-                        scope.pagination.total = caseResponse.count;
-                        last = caseResponse.last.updatedAt;
-                        first = caseResponse.first.updatedAt;
+                    .then(function (response) {
+                        scope.cases = response.data;
+                        scope.pagination.total = response.count;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
                     })
                     .catch(function () {
                         scope.cases = [];
@@ -35,10 +35,10 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
             scope.getPage = function () {
                 var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false;
                 inventoryService.getAllCases(nextPage ? 'next' : 'prev', nextPage ? last : first)
-                    .then(function (caseResponse) {
-                        scope.cases = caseResponse.data;
-                        last = caseResponse.last.updatedAt;
-                        first = caseResponse.first.updatedAt;
+                    .then(function (response) {
+                        scope.cases = response.data;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
                         scope.pagination.prevPage = scope.pagination.page;
                     })
                     .catch(function () {
@@ -95,8 +95,7 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                             }]
                         });
                     })
-                    .catch(function (err) {
-                        console.log(err);
+                    .catch(function () {
                         toastr.error('Failed to get case details.');
                     });
             };

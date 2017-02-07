@@ -14,8 +14,8 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
 
             scope.getOrders = function () {
                 inventoryService.getAllOrders()
-                    .then(function (data) {
-                        scope.orders = data;
+                    .then(function (response) {
+                        scope.orders = response.data;
                     })
                     .catch(function () {
                         scope.orders = [];
