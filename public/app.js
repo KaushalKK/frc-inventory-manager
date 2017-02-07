@@ -80,7 +80,7 @@ rootModule.config(['$stateProvider', '$urlRouterProvider', 'toastrConfig', funct
         url: '/dashboard',
         views: {
             '@home': {
-                templateUrl: 'templates/dashboard.html'
+                template: '<div dashboard></div>'
             }
         }
     });

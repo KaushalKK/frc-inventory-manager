@@ -1,5 +1,4 @@
 <div>
-    <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
             Dashboard
@@ -11,39 +10,36 @@
         </ol>
     </section>
 
-    <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-md-8">
-                <!-- TABLE: LATEST ORDERS -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Recent Status Changes</h3>
+                        <h3 class="box-title">Recent Orders</h3>
+                        <button class="btn btn-xs btn-success pull-right" ui-sref="home.orders">See All Orders</span>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <h4>Asset Tag</h4>
-                            </div>
-                            <div class="col-md-2">
-                                <h4>Date</h4>
-                            </div>
-                            <div class="col-md-2">
-                                <h4>Status</h4>
-                            </div>
-                            <div class="col-md-4">
-                                <h4>Item</h4>
-                            </div>
-                        </div>
-                        <div class="row" ng-repeat="order in orders">
-                            <div class="col-md-2">{{order.assetTag}}</div>
-                            <div class="col-md-2">{{order.updatedAt | date:'HH:mm dd/MMM/yy'}}</div>
-                            <div class="col-md-2"><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.status}}</span></div>
-                            <div class="col-md-4">{{order.item}}</div>
+                        <div class="table-responsive">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th><h4>Asset Tag</h4></th>
+                                        <th><h4>Date</h4></th>
+                                        <th><h4>Status</h4></th>
+                                        <th><h4>Item</h4></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="order in orders">
+                                        <td>{{order.assetTag}}</td>
+                                        <td>{{order.updatedAt | date:'HH:mm dd/MMM/yy'}}</td>
+                                        <td><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</span></td>
+                                        <td>{{order.productName}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <!-- /.box-body -->
                 </div>
             </div>
             <div class="col-md-4 ">
@@ -55,8 +51,5 @@
                 </div>
             </div>
         </div>
-        <!-- /.row (main row) -->
-
     </section>
-    <!-- /.content -->
 </div>
