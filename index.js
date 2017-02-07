@@ -4,6 +4,7 @@
 let http = require('http');
 let morgan = require('morgan');
 let express = require('express');
+var favicon = require('serve-favicon');
 let bodyParser = require('body-parser');
 
 let fs = require('fs');
@@ -21,6 +22,7 @@ app.set('port', process.env.PORT || 8080);
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(favicon(__dirname + '/public/styles/favicon.ico'));
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
