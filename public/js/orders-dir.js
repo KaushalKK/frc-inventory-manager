@@ -6,16 +6,40 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
         templateUrl: '../templates/orders.html',
         replace: true,
         link: function (scope) {
-            scope.ordersCountDropdown = [
-                { label: '10', value: '10' },
-                { label: '25', value: '25' }
-            ];
+            var last = null,
+                first = null;
+
+            scope.pagination = {
+                page: 1,
+                size: 0,
+                total: 0,
+                prevPage: 1,
+                totalPages: 0
+            };
             scope.orders = [];
 
             scope.getOrders = function () {
-                inventoryService.getAllOrders()
+                inventoryService.getAllOrders(null, null)
                     .then(function (response) {
                         scope.orders = response.data;
+                        scope.pagination.total = response.count;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
+                    })
+                    .catch(function () {
+                        scope.orders = [];
+                        toastr.error('Failed to get Orders');
+                    });
+            };
+
+            scope.getPage = function () {
+                var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false;
+                inventoryService.getAllOrders(nextPage ? 'next' : 'prev', nextPage ? last : first)
+                    .then(function (response) {
+                        scope.orders = response.data;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
+                        scope.pagination.prevPage = scope.pagination.page;
                     })
                     .catch(function () {
                         scope.orders = [];
@@ -81,7 +105,6 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
             };
 
             function init() {
-                scope.ordersCount = scope.ordersCountDropdown[0];
                 scope.orderSearchTerm = '';
 
                 scope.getOrders();

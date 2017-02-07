@@ -21,22 +21,14 @@
                     <!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
-                            <!--<div class="col-sm-2">
-                                <div class="dataTables_length">
-                                    <label>Records 
-                                        <select name="ordersCount" aria-controls="ordersCount" class="form-control input-sm" ng-options="count.label for count in ordersCountDropdown" ng-model="ordersCount">
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>-->
                             <div class="col-sm-6 btn-group" role="group">
-                                <button type="button" class="btn btn-flat btn-info" ng-click="changeStatus('checkin')">Check In</button>
-                                <button type="button" class="btn btn-flat btn-warning" ng-click="changeStatus('checkout')">Check Out</button>
+                                <button type="button" class="btn btn-info" ng-click="changeStatus('checkin')">Check In</button>
+                                <button type="button" class="btn btn-warning" ng-click="changeStatus('checkout')">Check Out</button>
                             </div>
                             <div class="col-sm-6">
-                                <div id="orderSearch" class="dataTables_filter">
+                                <!--<div id="orderSearch" class="dataTables_filter">
                                     <label>Search:<input type="search" class="form-control input-sm" ng-model="orderSearchTerm"></label>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
 
@@ -59,6 +51,14 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <ul uib-pagination total-items="pagination.total" ng-model="pagination.page" max-size="pagination.size" class="pagination" ng-change="getPage()" num-pages="pagination.totalPages" template-url="/templates/pagination.html"></ul>
+                            </div>
+                            <div class="col-sm-2">
+                                <h5>Total Orders: {{pagination.total}}</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
