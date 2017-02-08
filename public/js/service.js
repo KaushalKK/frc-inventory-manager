@@ -124,16 +124,21 @@ angular.module('inventorySystem').service('inventoryService', ['$cookies', '$htt
         }));
     };
 
-    this.getAllOrders = function (direction, updateAt) {
+    this.getAllOrders = function (direction, updateAt, searchTerm) {
         var queryParams = {};
         if (direction !== null && updateAt !== null) {
             queryParams.page = direction;
             queryParams.offset = updateAt;
         }
 
+        if (searchTerm !== null) {
+            queryParams.searchTerm = searchTerm;
+        }
+
         return promiseWrap($http({
             method: 'GET',
             url: '/orders',
+            params: queryParams,
             headers: {
                 'Authorization': 'JWT ' + $cookies.get('token')
             }

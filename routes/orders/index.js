@@ -39,16 +39,24 @@ module.exports = (router, passport, db) => {
 				};
 
 				let page = req.query.page,
-					offset = req.query.offset;
+					offset = req.query.offset,
+					searchQuery = req.query.searchTerm || null;
 
-				let condition = { };
+				let condition = {};
 
 				if (page === 'next') {
 					condition.updatedAt = { $lt: offset };
 				} else if (page === 'prev') {
 					condition.updatedAt = { $gt: offset };
 				}
-
+console.log(searchQuery);
+				if (searchQuery !== null) {
+console.log('here');
+console.log(Object.keys(searchQuery)[0]);
+					condition[Object.keys(searchQuery)[0]] = searchQuery[Object.keys(searchQuery)[0]];
+				}
+console.log(searchQuery);
+console.log(condition);
 				orderModel.find({}).count().exec()
 					.then((orderCount) => {
 						resp.count = orderCount;
@@ -56,8 +64,8 @@ module.exports = (router, passport, db) => {
 					})
 					.then((allOrders) => {
 						resp.data = allOrders;
-                        resp.first = allOrders[0];
-                        resp.last = allOrders[allOrders.length - 1];
+						resp.first = allOrders[0];
+						resp.last = allOrders[allOrders.length - 1];
 						res.send({ message: resp });
 					})
 					.catch((err) => {

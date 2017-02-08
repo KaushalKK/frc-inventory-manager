@@ -24,6 +24,15 @@ body {
     text-align: center;
 }
 
+.search-options {
+    width: 90px;
+    max-width: 90px;
+}
+
+.search-options > .btn.dropdown-toggle {
+    width: 100%;
+}
+
 .disabled.page-counter {
     color: #333;
 }
@@ -77,4 +86,13 @@ body {
     text-rendering: auto;
     content: "\f040";
     padding-right: 5px;
+}
+
+.dropdown-icon:after {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    content: "\f0d7 ";
+    margin-left: 10px;
 }

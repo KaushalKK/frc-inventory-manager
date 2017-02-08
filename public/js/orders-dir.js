@@ -17,11 +17,33 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                 totalPages: 0
             };
             scope.orders = [];
+            scope.orderSearchOptions = [
+                { label: 'Status', value: 'status' },
+                { label: 'Location', value: 'location' }
+            ];
+            scope.locations = [
+                { label: 'FIRST Canada Warehouse', value: 'warehouse' },
+                { label: 'Durham', value: 'durham' },
+                { label: 'Ryerson', value: 'ryerson' },
+                { label: 'Victoria Park', value: 'vicpark' },
+                { label: 'Waterloo', value: 'waterloo' },
+                { label: 'Georgian', value: 'georgian' },
+                { label: 'Windsor', value: 'windsor' },
+                { label: 'Western', value: 'western' },
+                { label: 'North Bay', value: 'northbay' },
+                { label: 'McMaster', value: 'mac' },
+                { label: 'District Championship', value: 'districtcmp' }
+            ];
+            scope.statusTypes = [
+                 { label: 'Check In', value: 'checkin' },
+                 { label: 'Check Out', value: 'checkout' }
+            ];
 
             scope.getOrders = function () {
-                inventoryService.getAllOrders(null, null)
+                inventoryService.getAllOrders(null, null, null)
                     .then(function (response) {
                         scope.orders = response.data;
+                        scope.pagination.page = 1;
                         scope.pagination.total = response.count;
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
@@ -33,8 +55,12 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
             };
 
             scope.getPage = function () {
-                var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false;
-                inventoryService.getAllOrders(nextPage ? 'next' : 'prev', nextPage ? last : first)
+                var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false,
+                    searchQuery = {
+                        term: scope.orderSearchTerm,
+                        field: scope.orderSearchType.value
+                    };
+                inventoryService.getAllOrders(nextPage ? 'next' : 'prev', nextPage ? last : first, searchQuery)
                     .then(function (response) {
                         scope.orders = response.data;
                         last = response.last.updatedAt;
@@ -104,8 +130,29 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                 });
             };
 
+            scope.assignSearchType = function (searchType) {
+                scope.orderSearchType = searchType;
+            };
+
+            scope.orderSearch = function () {
+                var searchQuery = {};
+                searchQuery[scope.orderSearchType.value] = scope.orderSearchTerm.value;
+                inventoryService.getAllOrders(null, null, searchQuery)
+                    .then(function (response) {
+                        scope.orders = response.data;
+                        last = response.last.updatedAt;
+                        first = response.first.updatedAt;
+                        scope.pagination.prevPage = scope.pagination.page;
+                    })
+                    .catch(function () {
+                        scope.orders = [];
+                        toastr.error('Failed to find Orders matching search query');
+                    });
+            };
+
             function init() {
                 scope.orderSearchTerm = '';
+                scope.orderSearchType = scope.orderSearchOptions[0];
 
                 scope.getOrders();
             }

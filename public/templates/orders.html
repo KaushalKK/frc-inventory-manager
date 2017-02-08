@@ -10,25 +10,32 @@
         </ol>
     </section>
 
-    <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Recent Orders</h3>
+                        <h3>Order List</h3>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-sm-6 btn-group" role="group">
+                            <div class="col-sm-8 btn-group" role="group">
                                 <button type="button" class="btn btn-info" ng-click="changeStatus('checkin')">Check In</button>
                                 <button type="button" class="btn btn-warning" ng-click="changeStatus('checkout')">Check Out</button>
                             </div>
-                            <div class="col-sm-6">
-                                <!--<div id="orderSearch" class="dataTables_filter">
-                                    <label>Search:<input type="search" class="form-control input-sm" ng-model="orderSearchTerm"></label>
-                                </div>-->
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="orderSearch">Search Orders:</span>
+                                    <select class="form-control" ng-model="orderSearchTerm" ng-options="option.label for option in orderSearchType.value === 'status' ? statusTypes : locations" ng-change="orderSearch()">
+                                        <option value="" default></option>
+                                    </select>
+                                    <div class="input-group-btn search-options">
+                                        <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{orderSearchType.label}}</button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li ng-repeat="orderSearch in orderSearchOptions" ng-click="assignSearchType(orderSearch)"><a>{{orderSearch.label}}</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
