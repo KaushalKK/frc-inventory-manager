@@ -136,7 +136,11 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
 
             scope.orderSearch = function () {
                 var searchQuery = {};
-                searchQuery[scope.orderSearchType.value] = scope.orderSearchTerm.value;
+                if (scope.orderSearchTerm !== null) {
+                    searchQuery[scope.orderSearchType.value] = scope.orderSearchTerm.value;
+                } else {
+                    searchQuery = null;
+                }
                 inventoryService.getAllOrders(null, null, searchQuery)
                     .then(function (response) {
                         scope.orders = response.data;

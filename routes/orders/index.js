@@ -40,7 +40,7 @@ module.exports = (router, passport, db) => {
 
 				let page = req.query.page,
 					offset = req.query.offset,
-					searchQuery = req.query.searchTerm || null;
+					searchQuery = req.query.searchTerm ? JSON.parse(req.query.searchTerm) : null;
 
 				let condition = {};
 
@@ -49,15 +49,14 @@ module.exports = (router, passport, db) => {
 				} else if (page === 'prev') {
 					condition.updatedAt = { $gt: offset };
 				}
-console.log(searchQuery);
+
 				if (searchQuery !== null) {
-console.log('here');
-console.log(Object.keys(searchQuery)[0]);
 					condition[Object.keys(searchQuery)[0]] = searchQuery[Object.keys(searchQuery)[0]];
+				} else {
+					searchQuery = {};
 				}
-console.log(searchQuery);
-console.log(condition);
-				orderModel.find({}).count().exec()
+
+				orderModel.find(searchQuery).count().exec()
 					.then((orderCount) => {
 						resp.count = orderCount;
 						return orderModel.find(condition).sort({ updatedAt: -1 }).limit(pageLimit).exec();
