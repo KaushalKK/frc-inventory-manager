@@ -61,10 +61,12 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <ul uib-pagination total-items="pagination.total" ng-model="pagination.page" max-size="pagination.size" class="pagination" ng-change="getPage()" num-pages="pagination.totalPages" template-url="/templates/pagination.html"></ul>
-                            </div>
-                            <div class="col-sm-2">
                                 <h5>Total Orders: {{pagination.total}}</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <ul uib-pagination total-items="pagination.total" ng-model="pagination.page" max-size="pagination.size" class="pagination" ng-change="getPage()" num-pages="pagination.totalPages" template-url="/templates/pagination.html"></ul>
                             </div>
                         </div>
                     </div>
