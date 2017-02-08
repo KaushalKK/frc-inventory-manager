@@ -20,9 +20,10 @@
                                 <h3>Case List</h3>
                             </div>
                             <div class="col-sm-4">
-                                <!--<div id="caseSearch" class="dataTables_filter">
-                                    <label>Search:<input type="search" class="form-control input" ng-model="caseSearchTerm"></label>
-                                </div>-->
+                                <div class="input-group btn-block">
+                                    <span class="input-group-addon" id="caseSearch">Search Cases:</span>
+                                    <input type="text" class="form-control input-lg" placeholder="Case Lookup" aria-describedby="caseSearch" ng-model="caseSearchTerm" ng-change="caseSearch()" ng-model-options="{ debounce: 500 }"></input>
+                                </div>
                             </div>
                         </div>
                     </div>
