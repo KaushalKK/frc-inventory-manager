@@ -22,6 +22,7 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                 inventoryService.getAllProducts(null, null)
                     .then(function (response) {
                         scope.products = response.data;
+                        scope.pagination.page = 1;
                         scope.pagination.total = response.count;
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;

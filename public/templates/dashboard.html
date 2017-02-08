@@ -45,8 +45,16 @@
             <div class="col-md-4 ">
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <button type="button" class="btn btn-block btn-primary btn-lg" ui-sref="home.create">Create Items</button>
-                        <button type="button" class="btn btn-block btn-success btn-lg" ui-sref="home.orders">Check-In / Check-Out</button>
+                        <div class="input-group btn-block">
+                            <span class="input-group-addon" id="assetSearch">Search Asset:</span>
+                            <input type="text" class="form-control input-lg" placeholder="Asset Tag Lookup" aria-describedby="assetSearch" ng-model="assetTagSearch" ng-change="assetSearch()" ng-model-options="{ debounce: 500 }"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <button type="button" class="btn btn-block btn-primary btn-lg" ui-sref="home.create">New Items</button>
+                        <button type="button" class="btn btn-block btn-success btn-lg" ui-sref="home.orders">New Order</button>
                     </div>
                 </div>
             </div>

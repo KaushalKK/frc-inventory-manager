@@ -1,0 +1,70 @@
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Case {{details.caseNumber}} Details</h3>
+    </div>
+    <div class="modal-body" id="modal-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <label>Asset Tag:</label> {{details.assetTag}}
+            </div>
+            <div class="col-sm-offset-2 col-sm-3" ng-if="details.type === 'case'">
+                <label>Case #:</label> {{details.caseNumber}}
+            </div>
+            <div class="col-sm-offset-2 col-sm-3" ng-if="details.type !== 'case'">
+                <div><label>Inside Case #:</label> {{details.inCase.case}}</div>
+            </div>
+            <div class="col-sm-3" ng-if="details.type !== 'case'">
+                <div><label>Quantity in Case:</label> {{details.inCase.quantity}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div><label>Name:</label> {{details.name}}</div>
+            </div>
+            <div class="col-sm-7">
+                <div><label>Description:</label> {{details.description}}</div>
+            </div>
+        </div>
+
+        <div class="table-responsive" ng-if="details.type === 'case'">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th><h4>Asset Tag</h4></th>
+                        <th><h4>Product</h4></th>
+                        <th><h4>Description</h4></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in productsInCase">
+                        <td>{{product.assetTag}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive" ng-if="details.type !== 'case'">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th><h4>Status</h4></th>
+                        <th><h4>Location</h4></th>
+                        <th><h4>Updated At</h4></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="order in productOrders">
+                        <td>{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</td>
+                        <td><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.location | uppercase}}</span></td>
+                        <td>{{order.updatedAt | date:'h:mma dd-MMM-yy'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="closeDetailsModal()">Close</button>
+    </div>
+</div>
