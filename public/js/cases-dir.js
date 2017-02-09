@@ -9,15 +9,6 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
             var last = null,
                 first = null;
 
-            scope.pagination = {
-                page: 1,
-                size: 0,
-                total: 0,
-                prevPage: 1,
-                totalPages: 0
-            };
-            scope.cases = [];
-
             scope.getCases = function () {
                 inventoryService.getAllCases(null, null)
                     .then(function (response) {
@@ -26,9 +17,11 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                         scope.pagination.total = response.count;
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.cases = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get Cases');
                     });
             };
@@ -41,9 +34,11 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
                         scope.pagination.prevPage = scope.pagination.page;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.cases = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get Cases');
                     });
             };
@@ -102,7 +97,16 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
             };
 
             function init() {
+                scope.cases = [];
                 scope.search = '';
+                scope.tableError = false;
+                scope.pagination = {
+                    page: 1,
+                    size: 0,
+                    total: 0,
+                    prevPage: 1,
+                    totalPages: 0
+                };
 
                 scope.getCases();
             }

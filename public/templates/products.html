@@ -36,10 +36,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="product in products" ng-click="getProductDetails(product.assetTag)">
+                                    <tr ng-if="!tableError" ng-repeat="product in products" ng-click="getProductDetails(product.assetTag)">
                                         <td>{{product.assetTag}}</td>
                                         <td>{{product.name}}</td>
                                         <td>{{product.description}}</td>
+                                    </tr>
+                                    <tr ng-if="tableError">
+                                        <td colspan="3">There was an error retrieving products.</td>
                                     </tr>
                                 </tbody>
                             </table>

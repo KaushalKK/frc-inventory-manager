@@ -36,10 +36,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="case in cases" ng-click="getCaseDetails(case.assetTag)">
+                                    <tr ng-if="!tableError" ng-repeat="case in cases" ng-click="getCaseDetails(case.assetTag)">
                                         <td>{{case.assetTag}}</td>
                                         <td>{{case.caseNumber}}</td>
                                         <td>{{case.description}}</td>
+                                    </tr>
+                                    <tr ng-if="tableError">
+                                        <td colspan="3">There was an error retrieving cases and totes.</td>
                                     </tr>
                                 </tbody>
                             </table>

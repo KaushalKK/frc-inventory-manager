@@ -9,15 +9,6 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
             var last = null,
                 first = null;
 
-            scope.pagination = {
-                page: 1,
-                size: 0,
-                total: 0,
-                prevPage: 1,
-                totalPages: 0
-            };
-            scope.products = [];
-
             scope.getProducts = function () {
                 inventoryService.getAllProducts(null, null)
                     .then(function (response) {
@@ -26,9 +17,11 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                         scope.pagination.total = response.count;
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.products = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get Products');
                     });
             };
@@ -41,9 +34,11 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
                         scope.pagination.prevPage = scope.pagination.page;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.products = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get Products');
                     });
             };
@@ -107,6 +102,15 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
 
             function init() {
                 scope.search = '';
+                scope.products = [];
+                scope.tableError = false;
+                scope.pagination = {
+                    page: 1,
+                    size: 0,
+                    total: 0,
+                    prevPage: 1,
+                    totalPages: 0
+                };
 
                 scope.getProducts();
             }
