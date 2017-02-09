@@ -12,8 +12,6 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
             function init() {
                 scope.tableError = false;
                 scope.orderSearchTerm = '';
-                scope.orderSearchType = scope.orderSearchOptions[0];
-
                 scope.orders = [];
                 scope.pagination = {
                     page: 1,
@@ -43,6 +41,8 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
                     { label: 'Check In', value: 'checkin' },
                     { label: 'Check Out', value: 'checkout' }
                 ];
+
+                scope.orderSearchType = scope.orderSearchOptions[0];
 
                 scope.getOrders();
             }
