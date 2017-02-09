@@ -12,16 +12,22 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
             scope.getCases = function () {
                 inventoryService.getAllCases(null, null)
                     .then(function (response) {
-                        scope.cases = response.data;
-                        scope.pagination.page = 1;
-                        scope.pagination.total = response.count;
-                        last = response.last.updatedAt;
-                        first = response.first.updatedAt;
-                        scope.tableError = false;
+                        if (response.data.length > 0 && response.count > 0) {
+                            scope.cases = response.data;
+                            scope.pagination.page = 1;
+                            scope.pagination.total = response.count;
+                            last = response.last.updatedAt;
+                            first = response.first.updatedAt;
+                            scope.tableError = false;
+                        } else {
+                            scope.tableError = true;
+                            scope.errorText = 'No Cases in System';
+                        }
                     })
                     .catch(function () {
                         scope.cases = [];
                         scope.tableError = true;
+                        scope.errorText = 'Failed to get Cases';
                         toastr.error('Failed to get Cases');
                     });
             };
@@ -30,15 +36,22 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                 var nextPage = scope.pagination.page > scope.pagination.prevPage ? true : false;
                 inventoryService.getAllCases(nextPage ? 'next' : 'prev', nextPage ? last : first)
                     .then(function (response) {
-                        scope.cases = response.data;
-                        last = response.last.updatedAt;
-                        first = response.first.updatedAt;
-                        scope.pagination.prevPage = scope.pagination.page;
-                        scope.tableError = false;
+                        if (response.data.length > 0 && response.count > 0) {
+                            scope.cases = response.data;
+                            scope.pagination.page = 1;
+                            scope.pagination.total = response.count;
+                            last = response.last.updatedAt;
+                            first = response.first.updatedAt;
+                            scope.tableError = false;
+                        } else {
+                            scope.tableError = true;
+                            scope.errorText = 'No Cases in System';
+                        }
                     })
                     .catch(function () {
                         scope.cases = [];
                         scope.tableError = true;
+                        scope.errorText = 'Failed to get Cases';
                         toastr.error('Failed to get Cases');
                     });
             };
@@ -100,6 +113,7 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                 scope.cases = [];
                 scope.search = '';
                 scope.tableError = false;
+                scope.errorText = 'Failed to get Cases';
                 scope.pagination = {
                     page: 1,
                     size: 0,

@@ -56,7 +56,7 @@
                                         <td>{{order.checkOutTime | date:'h:mma dd-MMM-yy'}}</td>
                                     </tr>
                                     <tr ng-if="tableError">
-                                        <td colspan="5">No Orders are available.</td>
+                                        <td colspan="5">{{errorText}}</td>
                                     </tr>
                                 </tbody>
                             </table>

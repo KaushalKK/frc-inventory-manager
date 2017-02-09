@@ -17,8 +17,8 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-primary" ng-model="assetCopy" uib-btn-radio="false">Single Item</button>
-                        <button type="button" class="btn btn-primary" ng-model="assetCopy" uib-btn-radio="true">Multiple Items</button>
+                            <button type="button" class="btn btn-sm" ng-class="{'btn-primary': !assetCopy, 'btn-info': assetCopy}" ng-model="assetCopy" uib-btn-radio="false">Single Item</button>
+                            <button type="button" class="btn btn-sm" ng-class="{'btn-primary': assetCopy, 'btn-info': !assetCopy}" ng-model="assetCopy" uib-btn-radio="true">Multiple Items</button>
                         </div>
                     </div>
                 </div>

@@ -42,7 +42,7 @@
                                         <td>{{product.description}}</td>
                                     </tr>
                                     <tr ng-if="tableError">
-                                        <td colspan="3">There was an error retrieving products.</td>
+                                        <td colspan="3">{{errorText}}</td>
                                     </tr>
                                 </tbody>
                             </table>

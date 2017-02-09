@@ -10,13 +10,19 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
             scope.getRecentOrders = function () {
                 inventoryService.getAllOrders(null, null)
                     .then(function (response) {
-                        scope.orders = response.data;
-                        scope.tableError = false;
+                        if (response.data.length > 0 && response.count > 0) {
+                            scope.orders = response.data;
+                            scope.tableError = false;
+                        } else {
+                            scope.tableError = true;
+                            scope.errorText = "No Recent Orders in System";
+                        }
                     })
                     .catch(function () {
                         scope.orders = [];
                         scope.tableError = true;
-                        toastr.error('Failed to get recent Orders');
+                        scope.errorText = "Failed to get Recent Orders";                        
+                        toastr.error('Failed to get Recent Orders');
                     });
             };
 
@@ -60,6 +66,7 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
                 scope.getRecentOrders();
                 scope.tableError = false;
                 scope.assetTagSearch = "";
+                scope.errorText = "Failed to get Recent Orders";
             }
 
             init();

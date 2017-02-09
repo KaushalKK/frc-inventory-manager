@@ -10,9 +10,10 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
                 first = null;
 
             function init() {
-                scope.tableError = false;
-                scope.orderSearchTerm = '';
                 scope.orders = [];
+                scope.tableError = false;
+                scope.errorText = 'Failed to get Orders';
+                scope.orderSearchTerm = '';
                 scope.pagination = {
                     page: 1,
                     size: 0,
@@ -66,16 +67,22 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
             scope.getOrders = function () {
                 inventoryService.getAllOrders(null, null, null)
                     .then(function (response) {
-                        scope.orders = responseMap(response.data);
-                        scope.pagination.page = 1;
-                        scope.pagination.total = response.count;
-                        last = response.last.updatedAt;
-                        first = response.first.updatedAt;
-                        scope.tableError = false;
+                        if (response.data.length > 0 && response.count > 0) {
+                            scope.orders = responseMap(response.data);
+                            scope.pagination.page = 1;
+                            scope.pagination.total = response.count;
+                            last = response.last.updatedAt;
+                            first = response.first.updatedAt;
+                            scope.tableError = false;
+                        } else {
+                            scope.tableError = true;
+                            scope.errorText = 'No Orders in System';
+                        }
                     })
                     .catch(function () {
                         scope.orders = [];
                         scope.tableError = true;
+                        scope.errorText = 'Failed to get Orders';
                         toastr.error('Failed to get Orders');
                     });
             };
@@ -88,15 +95,22 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
                     };
                 inventoryService.getAllOrders(nextPage ? 'next' : 'prev', nextPage ? last : first, searchQuery)
                     .then(function (response) {
-                        scope.orders = responseMap(response.data);
-                        last = response.last.updatedAt;
-                        first = response.first.updatedAt;
-                        scope.pagination.prevPage = scope.pagination.page;
-                        scope.tableError = false;
+                        if (response.data.length > 0 && response.count > 0) {
+                            scope.orders = responseMap(response.data);
+                            scope.pagination.page = 1;
+                            scope.pagination.total = response.count;
+                            last = response.last.updatedAt;
+                            first = response.first.updatedAt;
+                            scope.tableError = false;
+                        } else {
+                            scope.tableError = true;
+                            scope.errorText = 'No Orders in System';
+                        }
                     })
                     .catch(function () {
                         scope.orders = [];
                         scope.tableError = true;
+                        scope.errorText = 'Failed to get Orders';
                         toastr.error('Failed to get Orders');
                     });
             };
@@ -163,16 +177,23 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
                 }
                 inventoryService.getAllOrders(null, null, searchQuery)
                     .then(function (response) {
-                        scope.orders = responseMap(response.data);
-                        last = response.last.updatedAt;
-                        first = response.first.updatedAt;
-                        scope.pagination.prevPage = scope.pagination.page;
-                        scope.tableError = false;
+                        if (response.data.length > 0 && response.count > 0) {
+                            scope.orders = responseMap(response.data);
+                            scope.pagination.page = 1;
+                            scope.pagination.total = response.count;
+                            last = response.last.updatedAt;
+                            first = response.first.updatedAt;
+                            scope.tableError = false;
+                        } else {
+                            scope.tableError = true;
+                            scope.errorText = 'No matching Orders in System';
+                        }
                     })
                     .catch(function () {
                         scope.orders = [];
                         scope.tableError = true;
-                        toastr.error('Failed to find Orders matching search query');
+                        scope.errorText = 'Failed to find matching Orders';
+                        toastr.error('Failed to find matching Orders');
                     });
             };
 
