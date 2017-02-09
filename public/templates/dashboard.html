@@ -27,11 +27,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="order in orders">
+                                    <tr ng-if="!tableError" ng-repeat="order in orders">
                                         <td>{{order.assetTag}}</td>
                                         <td>{{order.updatedAt | date:'HH:mm dd/MMM/yy'}}</td>
-                                        <td><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</span></td>
+                                        <td><span class="label" ng-class="{'label-info': order.status === 'checkin', 'label-warning': order.status !== 'checkin'}">{{order.status === 'checkin' ? 'Warehouse' : order.location | uppercase}}</span></td>
                                         <td>{{order.productName}}</td>
+                                    </tr>
+                                    <tr ng-if="tableError">
+                                        <td colspan="4">No Recent Orders available.</td>
                                     </tr>
                                 </tbody>
                             </table>

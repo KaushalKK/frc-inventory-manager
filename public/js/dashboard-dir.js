@@ -12,9 +12,11 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
                 inventoryService.getAllOrders(null, null)
                     .then(function (response) {
                         scope.orders = response.data;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.orders = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get recent Orders');
                     });
             };
@@ -49,13 +51,14 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
                             });
                         })
                         .catch(function () {
-                            toastr.error('Failed to get case details.');
+                            toastr.error('Failed to get asset details.');
                         });
                 }
             };
 
             function init() {
                 scope.getRecentOrders();
+                scope.tableError = false;
                 scope.assetTagSearch = "";
             }
 
