@@ -6,7 +6,6 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
         templateUrl: '../templates/dashboard.html',
         replace: true,
         link: function (scope) {
-            scope.orders = [];
 
             scope.getRecentOrders = function () {
                 inventoryService.getAllOrders(null, null)
@@ -57,6 +56,7 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
             };
 
             function init() {
+                scope.orders = [];
                 scope.getRecentOrders();
                 scope.tableError = false;
                 scope.assetTagSearch = "";

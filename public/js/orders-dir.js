@@ -14,6 +14,36 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
                 scope.orderSearchTerm = '';
                 scope.orderSearchType = scope.orderSearchOptions[0];
 
+                scope.orders = [];
+                scope.pagination = {
+                    page: 1,
+                    size: 0,
+                    total: 0,
+                    prevPage: 1,
+                    totalPages: 0
+                };
+                scope.orderSearchOptions = [
+                    { label: 'Status', value: 'status' },
+                    { label: 'Location', value: 'location' }
+                ];
+                scope.locations = [
+                    { label: 'FIRST Canada Warehouse', value: 'warehouse' },
+                    { label: 'Durham', value: 'durham' },
+                    { label: 'Ryerson', value: 'ryerson' },
+                    { label: 'Victoria Park', value: 'vicpark' },
+                    { label: 'Waterloo', value: 'waterloo' },
+                    { label: 'Georgian', value: 'georgian' },
+                    { label: 'Windsor', value: 'windsor' },
+                    { label: 'Western', value: 'western' },
+                    { label: 'North Bay', value: 'northbay' },
+                    { label: 'McMaster', value: 'mac' },
+                    { label: 'District Championship', value: 'districtcmp' }
+                ];
+                scope.statusTypes = [
+                    { label: 'Check In', value: 'checkin' },
+                    { label: 'Check Out', value: 'checkout' }
+                ];
+
                 scope.getOrders();
             }
 
@@ -32,36 +62,6 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', '
                     };
                 });
             }
-
-            scope.pagination = {
-                page: 1,
-                size: 0,
-                total: 0,
-                prevPage: 1,
-                totalPages: 0
-            };
-            scope.orders = [];
-            scope.orderSearchOptions = [
-                { label: 'Status', value: 'status' },
-                { label: 'Location', value: 'location' }
-            ];
-            scope.locations = [
-                { label: 'FIRST Canada Warehouse', value: 'warehouse' },
-                { label: 'Durham', value: 'durham' },
-                { label: 'Ryerson', value: 'ryerson' },
-                { label: 'Victoria Park', value: 'vicpark' },
-                { label: 'Waterloo', value: 'waterloo' },
-                { label: 'Georgian', value: 'georgian' },
-                { label: 'Windsor', value: 'windsor' },
-                { label: 'Western', value: 'western' },
-                { label: 'North Bay', value: 'northbay' },
-                { label: 'McMaster', value: 'mac' },
-                { label: 'District Championship', value: 'districtcmp' }
-            ];
-            scope.statusTypes = [
-                { label: 'Check In', value: 'checkin' },
-                { label: 'Check Out', value: 'checkout' }
-            ];
 
             scope.getOrders = function () {
                 inventoryService.getAllOrders(null, null, null)
