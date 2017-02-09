@@ -65,8 +65,13 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                             windowClass: 'modal',
                             controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                 $scope.edit = false;
+                                $scope.noOrders = false;
                                 $scope.details = asset.details;
                                 $scope.productOrders = asset.associatedContent || [];
+
+                                if (asset.associatedContent.length === 0) {
+                                    $scope.noOrders = true;
+                                }
 
                                 $scope.closeDetailsModal = function () {
                                     $uibModalInstance.close();

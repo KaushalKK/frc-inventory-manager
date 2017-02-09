@@ -41,10 +41,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="order in productOrders">
+                    <tr ng-if="!noOrders" ng-repeat="order in productOrders">
                         <td>{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</td>
                         <td><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.location | uppercase}}</span></td>
                         <td>{{order.updatedAt | date:'h:mma dd-MMM-yy'}}</td>
+                    </tr>
+                    <tr ng-if="noOrders">
+                        <td colspan="3">No Orders for this product.</td>
                     </tr>
                 </tbody>
             </table>

@@ -36,10 +36,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="product in productsInCase">
+                    <tr ng-if="!noProducts" ng-repeat="product in productsInCase">
                         <td>{{product.assetTag}}</td>
                         <td>{{product.name}}</td>
                         <td>{{product.description}}</td>
+                    </tr>
+                    <tr ng-if="noProducts">
+                        <td colspan="3">No Products in this case.</td>
                     </tr>
                 </tbody>
             </table>
