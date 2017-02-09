@@ -1,9 +1,6 @@
 <div>
     <section class="content-header">
-        <h1>
-            Create
-            <small>New Cases &amp; Products</small>
-        </h1>
+        <h1>Create</h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
             <li class="active">Create</li>
@@ -13,13 +10,20 @@
     <!-- Main content -->
     <section class="content">
         <div class="box box-default">
-            <div class="box-body">
+            <div class="box-header">
                 <div class="row">
-                    <div class="col-sm-12 btn-group">
-                        <button type="button" class="btn btn-sm btn-primary" ng-model="assetCopy" uib-btn-radio="false">Single Item</button>
-                        <button type="button" class="btn btn-sm btn-primary" ng-model="assetCopy" uib-btn-radio="true">Multiple Items</button>
+                    <div class="col-sm-8">
+                        <h3>Create Assets</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="btn-group pull-right">
+                            <button type="button" class="btn btn-primary" ng-model="assetCopy" uib-btn-radio="false">Single Item</button>
+                        <button type="button" class="btn btn-primary" ng-model="assetCopy" uib-btn-radio="true">Multiple Items</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="box-body">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
                         <form id="create-form" class="form-horizontal" autocomplete="off" role="form" enctype="multipart/form-data">
