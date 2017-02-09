@@ -12,15 +12,21 @@ module.exports = (router, passport, db) => {
 				var order = req.body;
 				order.user = req.user.username;
 
+				if (order.status === 'checkin') {
+					order.checkInTime = new Date();
+				} else {
+					order.checkInTime = null;
+					order.checkOutTime = new Date();
+				}
+
 				assetModel.findOne({ assetTag: order.assetTag }).exec()
 					.then((asset) => {
 						order.productName = asset.name;
-						var orderDetails = new orderModel(order);
 
-						return orderDetails.save(orderDetails);
+						return orderModel.findOneAndUpdate({ assetTag: order.assetTag, checkInTime: null }, order, { upsert: true }).exec();
 					})
-					.then((createdOrderDetails) => {
-						res.status(201).send({ message: createdOrderDetails });
+					.then((createdOrder) => {
+						res.status(201).send({ message: createdOrder });
 					})
 					.catch((err) => {
 						res.status(400).send({

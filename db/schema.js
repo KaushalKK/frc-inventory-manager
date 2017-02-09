@@ -62,7 +62,9 @@ module.exports = function (mongoose) {
         },
         assetTag: String,
         location: String,
-        productName: String
+        productName: String,
+        checkInTime: Date,
+        checkOutTime: Date
     },
     {
         timestamps: true

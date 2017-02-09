@@ -41,17 +41,22 @@
                                 <thead>
                                     <tr>
                                         <th><h4>Asset Tag</h4></th>
-                                        <th><h4>Status</h4></th>
-                                        <th><h4>Location</h4></th>
-                                        <th><h4>Updated At</h4></th>
+                                        <th><h4>Check Out Location</h4></th>
+                                        <th><h4>Check Out Time</h4></th>
+                                        <th><h4>Check In Location</h4></th>
+                                        <th><h4>Check In Time</h4></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="order in orders">
+                                    <tr ng-if="!tableError" ng-repeat="order in orders">
                                         <td>{{order.assetTag}}</td>
-                                        <td>{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</td>
-                                        <td><span class="label" ng-class="{'label-info': order.location === 'warehouse', 'label-warning': order.location !== 'warehouse'}">{{order.location | uppercase}}</span></td>
-                                        <td>{{order.updatedAt | date:'h:mma dd-MMM-yy'}}</td>
+                                        <td><span class="label label-warning">{{order.location | uppercase}}</span></td>
+                                        <td>{{order.checkOutTime | date:'h:mma dd-MMM-yy'}}</td>
+                                        <td><span ng-if="order.checkInTime !== null" class="label label-info">WAREHOUSE</span></td>
+                                        <td>{{order.checkInTime | date:'h:mma dd-MMM-yy'}}</td>
+                                    </tr>
+                                    <tr ng-if="tableError">
+                                        <td colspan="5">No Orders are available.</td>
                                     </tr>
                                 </tbody>
                             </table>

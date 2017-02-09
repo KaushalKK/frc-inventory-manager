@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventoryService', 'toastr', function ($uibModal, inventoryService, toastr) {
+angular.module('inventorySystem').directive('orders', ['$uibModal', '$filter', 'inventoryService', 'toastr', function ($uibModal, $filter, inventoryService, toastr) {
     return {
         restrict: 'AE',
         templateUrl: '../templates/orders.html',
@@ -8,6 +8,30 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
         link: function (scope) {
             var last = null,
                 first = null;
+
+            function init() {
+                scope.tableError = false;
+                scope.orderSearchTerm = '';
+                scope.orderSearchType = scope.orderSearchOptions[0];
+
+                scope.getOrders();
+            }
+
+            function responseMap(data) {
+                return data.map(function (obj) {
+                    return {
+                        user: obj.user,
+                        status: obj.status,
+                        assetTag: obj.assetTag,
+                        location: $filter('filter')(scope.locations, function (eventLocation) {
+                            return eventLocation.value === obj.location;
+                        })[0].label,
+                        productName: obj.productName,
+                        checkInTime: obj.checkInTime,
+                        checkOutTime: obj.checkOutTime
+                    };
+                });
+            }
 
             scope.pagination = {
                 page: 1,
@@ -35,21 +59,23 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                 { label: 'District Championship', value: 'districtcmp' }
             ];
             scope.statusTypes = [
-                 { label: 'Check In', value: 'checkin' },
-                 { label: 'Check Out', value: 'checkout' }
+                { label: 'Check In', value: 'checkin' },
+                { label: 'Check Out', value: 'checkout' }
             ];
 
             scope.getOrders = function () {
                 inventoryService.getAllOrders(null, null, null)
                     .then(function (response) {
-                        scope.orders = response.data;
+                        scope.orders = responseMap(response.data);
                         scope.pagination.page = 1;
                         scope.pagination.total = response.count;
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.orders = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get Orders');
                     });
             };
@@ -62,13 +88,15 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                     };
                 inventoryService.getAllOrders(nextPage ? 'next' : 'prev', nextPage ? last : first, searchQuery)
                     .then(function (response) {
-                        scope.orders = response.data;
+                        scope.orders = responseMap(response.data);
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
                         scope.pagination.prevPage = scope.pagination.page;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.orders = [];
+                        scope.tableError = true;
                         toastr.error('Failed to get Orders');
                     });
             };
@@ -79,19 +107,8 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                     size: 'lg',
                     windowClass: 'modal',
                     controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
-                        $scope.districtEvents = [
-                            { label: 'Durham', value: 'durham' },
-                            { label: 'Ryerson', value: 'ryerson' },
-                            { label: 'Victoria Park', value: 'vicpark' },
-                            { label: 'Waterloo', value: 'waterloo' },
-                            { label: 'Georgian', value: 'georgian' },
-                            { label: 'Windsor', value: 'windsor' },
-                            { label: 'Western', value: 'western' },
-                            { label: 'North Bay', value: 'northbay' },
-                            { label: 'McMaster', value: 'mac' },
-                            { label: 'District Championship', value: 'districtcmp' }
-                        ];
-                        $scope.warehouse = { label: 'FIRST Canada Warehouse', value: 'warehouse' };
+                        $scope.districtEvents = scope.locations.slice(1);
+                        $scope.warehouse = scope.locations[0];
                         $scope.successButtonText = (statusType === 'checkin' ? 'Check In' : 'Check Out');
                         $scope.closeModal = function () {
                             $uibModalInstance.dismiss('Cancel');
@@ -100,9 +117,12 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                         $scope.submitOrder = function () {
                             var orderDetails = {
                                 status: statusType,
-                                assetTag: $scope.assetTag,
-                                location: statusType === 'checkin' ? 'warehouse' : $scope.location.value
+                                assetTag: $scope.assetTag
                             };
+
+                            if (statusType === 'checkout') {
+                                orderDetails.location = $scope.location.value;
+                            }
 
                             inventoryService.createOrder(orderDetails)
                                 .then(function () {
@@ -143,23 +163,18 @@ angular.module('inventorySystem').directive('orders', ['$uibModal', 'inventorySe
                 }
                 inventoryService.getAllOrders(null, null, searchQuery)
                     .then(function (response) {
-                        scope.orders = response.data;
+                        scope.orders = responseMap(response.data);
                         last = response.last.updatedAt;
                         first = response.first.updatedAt;
                         scope.pagination.prevPage = scope.pagination.page;
+                        scope.tableError = false;
                     })
                     .catch(function () {
                         scope.orders = [];
+                        scope.tableError = true;
                         toastr.error('Failed to find Orders matching search query');
                     });
             };
-
-            function init() {
-                scope.orderSearchTerm = '';
-                scope.orderSearchType = scope.orderSearchOptions[0];
-
-                scope.getOrders();
-            }
 
             init();
         }
