@@ -11,7 +11,7 @@ module.exports = (router, passport, db) => {
             let resource = "/user";
             let model = db.models.Users;
 
-            router.put(resource, (req, res) => {
+            router.put(resource, passport.authenticate("jwt", { session: false }), (req, res) => {
                 var user = {
                     username: req.body.username,
                     password: bcrypt.hashSync(req.body.password, 10),

@@ -151,7 +151,7 @@ module.exports = (router, passport, db) => {
                         ]);
                     })
                     .spread((orders, products) => {
-                        assetResponse.associatedOrders = orders;
+                        assetResponse.associatedOrders = orders || [];
                         assetResponse.associatedProducts = products || [];
                         res.send({ message: assetResponse });
                     })

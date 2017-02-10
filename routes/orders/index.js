@@ -58,6 +58,10 @@ module.exports = (router, passport, db) => {
 
 				if (searchQuery !== null) {
 					condition[Object.keys(searchQuery)[0]] = searchQuery[Object.keys(searchQuery)[0]];
+					if (Object.keys(searchQuery)[0] === 'location') {
+						condition.status = 'checkout';
+						searchQuery.status = 'checkout';
+					}
 				} else {
 					searchQuery = {};
 				}
