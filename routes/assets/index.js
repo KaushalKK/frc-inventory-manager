@@ -1,5 +1,7 @@
 "use strict";
 
+var q = require("q");
+
 module.exports = (router, passport, db) => {
     return {
         "configureRoutes": () => {
@@ -143,10 +145,14 @@ module.exports = (router, passport, db) => {
                 assetModel.findOne({ assetTag: req.params.assetTag }).exec()
                     .then((assetDetails) => {
                         assetResponse.details = assetDetails;
-                        return assetDetails.type !== 'product' ? assetModel.find({ 'inCase.case': assetDetails.caseNumber }).exec() : orderModel.find({ assetTag: req.params.assetTag }).exec();
+                        return q.all([
+                            orderModel.find({ assetTag: req.params.assetTag }).exec(),
+                            assetModel.find({ 'inCase.case': assetDetails.caseNumber }).exec()
+                        ]);
                     })
-                    .then((productsOrOrders) => {
-                        assetResponse.associatedContent = productsOrOrders;
+                    .spread((orders, products) => {
+                        assetResponse.associatedOrders = orders;
+                        assetResponse.associatedProducts = products || [];
                         res.send({ message: assetResponse });
                     })
                     .catch((err) => {

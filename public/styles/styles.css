@@ -15,6 +15,32 @@ body {
     padding-top: 15px;
 }
 
+.details-table-container {
+    padding-bottom: 10px;
+}
+
+
+.details-table-container .table-responsive .table {
+    margin-bottom: 0;
+}
+
+.details-table-container .table-responsive .table th:nth-child(1), .details-table-container .table-responsive .table td:nth-child(1) {
+    width: 200px;
+}
+
+.details-table-container .table-responsive .table th:nth-child(2), .details-table-container .table-responsive .table td:nth-child(2) {
+    width: 250px;
+}
+
+.details-table-container .table-responsive .table th h5 {
+    margin-top: 0;
+}
+
+.details-table {
+    max-height: 160px;
+    overflow-y: auto;
+}
+
 .pagination {
     margin: 0;
 }
@@ -41,6 +67,33 @@ body {
     cursor: default;
     background: none;
     border-color: #ddd;
+}
+
+textarea.form-control {
+    resize: none;
+    max-width: 100%;
+}
+
+.asset-description {
+    max-height: 80px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.asset-description::-webkit-scrollbar, .details-table::-webkit-scrollbar {
+    width: 5px;
+}
+
+.asset-description::-webkit-scrollbar-track, .details-table::-webkit-scrollbar-track {
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.asset-description::-webkit-scrollbar-thumb, .details-table::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,1);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,1);
 }
 
 .logout-icon:before {

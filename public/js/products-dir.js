@@ -67,9 +67,9 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
                                 $scope.edit = false;
                                 $scope.noOrders = false;
                                 $scope.details = asset.details;
-                                $scope.productOrders = asset.associatedContent || [];
+                                $scope.productOrders = asset.associatedOrders || [];
 
-                                if (asset.associatedContent.length === 0) {
+                                if (asset.associatedOrders.length === 0) {
                                     $scope.noOrders = true;
                                 }
 

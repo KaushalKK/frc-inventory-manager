@@ -26,26 +26,62 @@
             </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <th><h4>Asset Tag</h4></th>
-                        <th><h4>Name</h4></th>
-                        <th><h4>Description</h4></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-if="!noProducts" ng-repeat="product in productsInCase">
-                        <td>{{product.assetTag}}</td>
-                        <td>{{product.name}}</td>
-                        <td>{{product.description}}</td>
-                    </tr>
-                    <tr ng-if="noProducts">
-                        <td colspan="3">No Products in this case.</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="details-table-container">
+            <h4>Orders</h4>
+            <div class="table-responsive">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th><h5>Status</h5></th>
+                            <th><h5>Location</h5></th>
+                            <th><h5>Updated At</h5></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table-responsive details-table">
+                <table class="table table-condensed table-striped">
+                    <tbody>
+                        <tr ng-if="!noOrders" ng-repeat="order in caseOrders">
+                            <td>{{order.status === 'checkin' ? 'Checked In' : 'Checked Out'}}</td>
+                            <td><span class="label" ng-class="{'label-info': order.status === 'checkin', 'label-warning': order.status !== 'checkin'}">{{order.status === 'checkin' ? 'warehouse' : order.location | uppercase}}</span></td>
+                            <td>{{order.updatedAt | date:'h:mma dd-MMM-yy'}}</td>
+                        </tr>
+                        <tr ng-if="noOrders">
+                            <td colspan="3">No Orders for this case.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="details-table-container">
+            <h4>Products</h4>
+            <div class="table-responsive">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th><h5>Asset Tag</h5></th>
+                            <th><h5>Name</h5></th>
+                            <th><h5>Description</h5></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="table-responsive details-table">
+                <table class="table table-condensed table-striped">
+                    <tbody>
+                        <tr ng-if="!noProducts" ng-repeat="product in caseProducts">
+                            <td>{{product.assetTag}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.description}}</td>
+                        </tr>
+                        <tr ng-if="noProducts">
+                            <td colspan="3">No Products in this case.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

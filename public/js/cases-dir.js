@@ -65,11 +65,17 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
                             windowClass: 'modal',
                             controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                 $scope.edit = false;
+                                $scope.noOrders = false;
                                 $scope.noProducts = false;
                                 $scope.details = asset.details;
-                                $scope.productsInCase = asset.associatedContent || [];
+                                $scope.caseOrders = asset.associatedOrders || [];
+                                $scope.caseProducts = asset.associatedProducts || [];
 
-                                if (asset.associatedContent.length === 0) {
+                                if (asset.associatedOrders.length === 0) {
+                                    $scope.noOrders = true;
+                                }
+
+                                if (asset.associatedProducts.length === 0) {
                                     $scope.noProducts = true;
                                 }
 
