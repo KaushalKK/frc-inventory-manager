@@ -21,17 +21,17 @@
                                 <thead>
                                     <tr>
                                         <th><h4>Asset Tag</h4></th>
-                                        <th><h4>Date</h4></th>
+                                        <th><h4>Asset Name</h4></th>
                                         <th><h4>Status</h4></th>
-                                        <th><h4>Item</h4></th>
+                                        <th><h4>Updated At</h4></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-if="!tableError" ng-repeat="order in orders">
                                         <td>{{order.assetTag}}</td>
-                                        <td>{{order.updatedAt | date:'HH:mm dd-MMM-yy'}}</td>
-                                        <td><span class="label" ng-class="{'label-info': order.status === 'checkin', 'label-warning': order.status !== 'checkin'}">{{order.status === 'checkin' ? 'Warehouse' : order.location | uppercase}}</span></td>
                                         <td>{{order.productName}}</td>
+                                        <td><span class="label" ng-class="{'label-info': order.status === 'checkin', 'label-warning': order.status !== 'checkin'}">{{order.status === 'checkin' ? 'Warehouse' : order.location | uppercase}}</span></td>
+                                        <td>{{order.updatedAt | date:'HH:mm dd-MMM-yy'}}</td>
                                     </tr>
                                     <tr ng-if="tableError">
                                         <td colspan="4">{{errorText}}</td>
