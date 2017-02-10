@@ -2,6 +2,10 @@ body {
     background-color: #ecf0f5;
 }
 
+body.modal-open {
+    padding-right: 0 !important;
+}
+
 .wrapper {
     position: inherit;
 }
@@ -18,7 +22,6 @@ body {
 .details-table-container {
     padding-bottom: 10px;
 }
-
 
 .details-table-container .table-responsive .table {
     margin-bottom: 0;
