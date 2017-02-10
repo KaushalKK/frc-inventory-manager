@@ -119,7 +119,6 @@ angular.module('inventorySystem').directive('products', ['$uibModal', 'inventory
             };
 
             function init() {
-                scope.search = '';
                 scope.products = [];
                 scope.tableError = false;
                 scope.errorText = 'Failed to get Products';

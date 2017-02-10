@@ -122,7 +122,6 @@ angular.module('inventorySystem').directive('cases', ['$uibModal', 'inventorySer
 
             function init() {
                 scope.cases = [];
-                scope.search = '';
                 scope.tableError = false;
                 scope.errorText = 'Failed to get Cases';
                 scope.pagination = {

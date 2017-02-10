@@ -36,8 +36,8 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
                                 windowClass: 'modal',
                                 controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
                                     $scope.details = asset.details;
-                                    $scope.productOrders = asset.associatedContent || [];
-                                    $scope.productsInCase = asset.associatedContent || [];
+                                    $scope.productOrders = asset.associatedOrders || [];
+                                    $scope.productsInCase = asset.associatedProducts || [];
 
                                     $scope.closeDetailsModal = function () {
                                         $uibModalInstance.close();
@@ -45,10 +45,12 @@ angular.module('inventorySystem').directive('dashboard', ['$uibModal', 'inventor
 
                                     $uibModalInstance.result.then(function () {
                                         setTimeout(function () {
+                                            scope.assetTagSearch = "";
                                             scope.getRecentOrders();
                                         }, 400);
                                     }, function () {
                                         setTimeout(function () {
+                                            scope.assetTagSearch = "";
                                             scope.getRecentOrders();
                                         }, 400);
                                     });
